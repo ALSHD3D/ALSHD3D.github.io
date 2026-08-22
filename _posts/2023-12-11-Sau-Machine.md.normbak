@@ -16,12 +16,12 @@ Scan the machine with Nmap tool
 sudo nmap -sS -v -n -A 10.10.11.224
 ```
 
-![](/assets/img/posts/pasted-image-20260819231432-png.svg)
+![](/assets/img/posts/pasted-image-20260819231432-.png)
 
 Reading further Nmap scan report regarding Port `55555` , we can observe that it is accessible from a browser since it accepts HTTP GET request. Navigate to it
 	 http://10.10.11.224:55555
 
-![](/assets/img/posts/pasted-image-20260819231641-png.svg)
+![](/assets/img/posts/pasted-image-20260819231641-.png)
 
 Now, we know the service running on port 55555 is request-baskets and version of that service is 1.2.1
 
@@ -38,7 +38,7 @@ I'd advise you to play around with the request-baskets to understand what exactl
 
 ### Exploitation & Gaining Access
 First, let's create a request basket and adjust its settings as following
-![[Pasted image /assets/img/posts/20250816233929-png.svg]]
+![[Pasted image /assets/img/posts/20250816233929-.png]]
 
 1- insecure_tls                    set to true will bypass certificate verification
 2- proxy_response              set to true will send response of the forwarded server back to our client
@@ -46,20 +46,20 @@ First, let's create a request basket and adjust its settings as following
 
 This app lets users create “baskets” to capture HTTP requests. When I created a new basket, I was given a token, and opening the basket revealed a UI to view incoming requests.
 
-![](/assets/img/posts/pasted-image-20260819232336-png.svg)
+![](/assets/img/posts/pasted-image-20260819232336-.png)
 
 
 Second, Let's find out what lurks inside our Port 80 by visiting our bucket URL
-![](/assets/img/posts/pasted-image-20260819232351-png.svg)
+![](/assets/img/posts/pasted-image-20260819232351-.png)
 
 After identifying the request-baskets version, I searched for known vulnerabilities and found this CVE, This version allowed unauthenticated users to force the server to make HTTP requests to internal services.
 
 Using the exploit from [https://github.com/entr0pie/CVE-2023-27163](https://github.com/entr0pie/CVE-2023-27163).
 
-![](/assets/img/posts/pasted-image-20260819232455-png.svg)
+![](/assets/img/posts/pasted-image-20260819232455-.png)
 
 Visiting the newly created bucket revealed this page, which has a suspiciously obvious version clue for Mailtrail.
-![](/assets/img/posts/pasted-image-20260819232513-png.svg)
+![](/assets/img/posts/pasted-image-20260819232513-.png)
 
 Now, we know the service running on Port 80 is Mailtrail of version 0.53
 

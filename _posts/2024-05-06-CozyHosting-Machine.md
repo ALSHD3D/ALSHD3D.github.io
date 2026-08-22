@@ -129,7 +129,7 @@ postgres=# d
 postgres=# select * from users;
 ```
 
-![](assets/img/posts/pasted-image-20260820074216-png.svg))
+![](assets/img/posts/pasted-image-20260820074216-.png))
 
 We cracked this password using john tool`pasted-image-20260820074216.png`ou.txt
 ```

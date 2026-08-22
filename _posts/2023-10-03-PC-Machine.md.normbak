@@ -168,7 +168,7 @@ We should see `127.0.0.1:8000` running.
 #### Accessing the Internal Service
 Access the server on the browser by entering the following URL: http://127.0.0.1:8000/
 
-![[Pasted image /assets/img/posts/20250816233102-png.svg]]
+![[Pasted image /assets/img/posts/20250816233102-.png]]
 
 After trying the default credentials without success, I conducted a search for vulnerabilities and discovered that `pyLoad` page has a vulnerability (CVE-2023-0297) and got an exploit to this CVE using Python: https://github.com/JacobEbben/CVE-2023-0297
 

@@ -142,12 +142,12 @@ Files owned by the user
 find / -uid 1001 -type f -ls 2>/dev/null | grep -v "/proc*"
 ```
 
-![](/assets/img/posts/pasted-image-20260822084907-png.svg)
+![](/assets/img/posts/pasted-image-20260822084907-.png)
 
 Files with the name ![](assets/img/posts/pasted-image-20260822084907-png)>/dev/null  
 ```
 
-![](/assets/img/posts/pasted-image-20260822084933-png.svg)
+![](/assets/img/posts/pasted-image-20260822084933-.png)
 
 To display it
 ```
@@ -212,7 +212,7 @@ susan@perfection:~/ruby_app$ sudo su
 ```
 Once we do, we found that `susan` user is able to act as root.
 
-![](/assets/img/posts/pasted-image-20260822090730-png.svg)
+![](/assets/img/posts/pasted-image-20260822090730-.png)
 
 Searching for the root flag
 ```

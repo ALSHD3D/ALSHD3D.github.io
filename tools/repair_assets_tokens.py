@@ -45,8 +45,8 @@ for md in sorted(POSTS.glob('*.md')):
                 s = slug
                 if s.endswith('-png'):
                     origname = s[:-len('-png')] + '.png'
-                elif s.endswith('-png.svg'):
-                    origname = s[:-len('-png.svg')] + '.png'
+                elif s.endswith('-.png'):
+                    origname = s[:-len('-.png')] + '.png'
                 elif s.endswith('.svg'):
                     origname = s[:-len('.svg')] + '.png'
                 else:
