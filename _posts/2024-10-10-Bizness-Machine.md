@@ -16,7 +16,7 @@ Scan the HTB machine with Nmap tool
 nmap -A -oN initial_scan 10.10.11.252
 ```
 
-![](Pasted%20image%2020260820151410.png)
+![](/assets/img/posts/pasted-image-20260820151410-png.svg)
 
 Port 80 has redirection to **bizness.htb**, so add it to our `/etc/hosts` file
 ```
@@ -26,7 +26,7 @@ sudo mousepad /etc/hosts
 
 Lets go and access it
 
-![](019_Bizness_-_Easy_Machine_000.png)
+![](/assets/img/posts/019-bizness-easy-machine-000-png.svg)
 
 The application is a static web app, with no juicy links or action buttons. Therefore, we will start to do Directory brute forcing using: https://github.com/maurosoria/dirsearch
 ```
@@ -43,7 +43,7 @@ Output of the Dirsearch tool, as follows:
 
  So lets navigate to the interesting one here: `/control/login`
 
-![](019_Bizness_-_Easy_Machine_001.png)
+![](/assets/img/posts/019-bizness-easy-machine-001-png.svg)
 
 And it have a version of Apache OFBiz (v18.12 release).
 
@@ -112,21 +112,21 @@ ofbiz@bizness:/opt/ofbiz\$ cd framework/resources/templates
 ofbiz@bizness:/opt/ofbiz/framework/resources/templates\$ ls
 ```
 
-![](019_Bizness_-_Easy_Machine_002.png)
+![](/assets/img/posts/019-bizness-easy-machine-002-png.svg)
 
 After a while, I found an interesting file
 ```
 ofbiz@bizness:/opt/ofbiz/framework/resources/templates\$ cat AdminUserLoginData.xml
 ```
 
-![](019_Bizness_-_Easy_Machine_003.png)
+![](/assets/img/posts/019-bizness-easy-machine-003-png.svg)
 
 So we got the current password, from the XML file: `{SHA}47ca69ebb4bdc9ae0adec130880165d2cc05db1a`
 
 Continuing our recon, I found another interesting file, called `c54d0.dat`. This file is located in `/opt/ofbiz/runtime/data/derby/ofbiz/seg0`
 When I viewed the contents of the file, a hash for the current password was found, which is : `$SHA$d$uP0_QaVBpDWFeo8-dRzDqRwXQ2I`
 
-![](019_Bizness_-_Easy_Machine_004.png)
+![](/assets/img/posts/019-bizness-easy-machine-004-png.svg)
 
 
 This is encrypted Hash with SHA algorithm, therefore we can not reverse the algorithm to get the plain text
@@ -143,7 +143,7 @@ git clone https://github.com/duck-sec/Apache-OFBiz-SHA1-Cracker
 python3 OFBiz-crack.py --hash-string '$SHA$d$uP0_QaVBpDWFeo8-dRzDqRwXQ2I'
 ```
 
-![[Pasted image 20250817005254.png]]
+![[Pasted image /assets/img/posts/20250817005254-png.svg]]
 The password is: `monkeybizness`
 
 Switch to the root user

