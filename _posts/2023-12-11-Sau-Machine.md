@@ -16,12 +16,12 @@ Scan the machine with Nmap tool
 sudo nmap -sS -v -n -A 10.10.11.224
 ```
 
-![](assets/img/posts/pasted-image-20260819231432-png-svg.svg))
+![](assets/img/posts/pasted-image-20260819231432-png))
 
 Reading further Nmap scan report regarding Port `55555` , we can observe that it is accessible from a browser since it accepts HTTP GET request. Navigate to it
 	 http://10.10.11.224:55555
 
-![](assets/img/posts/pasted-image-20260819231641-png-svg.svg))
+![](assets/img/posts/pasted-image-20260819231641-png))
 
 Now, we know the service running on port 55555 is request-baskets and version of that service is 1.2.1
 
@@ -38,7 +38,7 @@ I'd advise you to play around with the request-baskets to understand what exactl
 
 ### Exploitation & Gaining Access
 First, let's create a request basket and adjust its settings as following
-![](assets/img/posts/20250816233929-png-svg.svg))
+![](assets/img/posts/20250816233929-png))
 
 1- insecure_tls                    set to true will bypass certificate verification
 2- proxy_response              set to true will send response of the forwarded server back to our client
