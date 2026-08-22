@@ -101,7 +101,7 @@ And we can login to the site: `gitea.searcher.htb` , with the user and credentia
 - Username: cody
 - Password: jh1usoih2bkjaspwe92
 
-![898](https://miro.medium.com/v2/resize:fit:700/0*ltq8pTTwpT-pk5-M.png)
+![898](pasteimage.png)
 
 Exploring the interface hinted at possible privilege escalation paths, but nothing immediately exploitable.
 
