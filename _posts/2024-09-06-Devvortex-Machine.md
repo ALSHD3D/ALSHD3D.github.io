@@ -1,14 +1,11 @@
 ---
 title: Hack The Box - Devvortex
-date: 2024-09-06 13:33:37 +/-TTTT
+date: 2024-09-06 13:33:37
 categories:
-  - Hack The Box
+  - HTB
 tags:
   - HTB
 comments: true
-image:
-  path:
-  show_in_post: true
 ---
 
 HTB Devvortex Machine - https://www.hackthebox.com/machines/devvortex

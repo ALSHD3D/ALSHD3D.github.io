@@ -1,14 +1,11 @@
 ---
 title: Hack The Box - CozyHosting
-date: 2024-05-06 13:33:37 +/-TTTT
+date: 2024-05-06 13:33:37
 categories:
-  - Hack The Box
+  - HTB
 tags:
   - HTB
 comments: true
-image:
-  path:
-  show_in_post: true
 ---
 
 HTB CozyHosting Machine - https://www.hackthebox.com/machines/cozyhosting

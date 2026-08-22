@@ -1,12 +1,11 @@
 ---
 title: Hack The Box - Busqueda
-date: 2023-07-05 13:33:37 +/-TTTT
-categories: [Hack The Box]
-tags: [HTB]
+date: 2023-07-05 13:33:37
+categories:
+  - HTB
+tags:
+  - HTB
 comments: true
-image:
-  path: 
-  show_in_post: true
 ---
 
 HTB Busqueda Machine - https://www.hackthebox.com/machines/busqueda

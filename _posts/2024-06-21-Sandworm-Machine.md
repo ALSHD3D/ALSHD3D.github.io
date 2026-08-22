@@ -1,14 +1,11 @@
 ---
 title: Hack The Box - Sandworm
-date: 2024-06-21 13:33:37 +/-TTTT
+date: 2024-06-21 13:33:37
 categories:
-  - Hack The Box
+  - HTB
 tags:
   - HTB
 comments: true
-image:
-  path:
-  show_in_post: true
 ---
 
 HTB Sandworm Machine - https://www.hackthebox.com/machines/sandworm

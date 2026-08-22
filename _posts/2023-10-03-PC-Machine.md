@@ -1,14 +1,11 @@
 ---
 title: Hack The Box - PC
-date: 2023-10-03 13:33:37 +/-TTTT
+date: 2023-10-03 13:33:37
 categories:
-  - Hack The Box
+  - HTB
 tags:
   - HTB
 comments: true
-image:
-  path:
-  show_in_post: true
 ---
 
 HTB PC Machine - https://www.hackthebox.com/machines/pc

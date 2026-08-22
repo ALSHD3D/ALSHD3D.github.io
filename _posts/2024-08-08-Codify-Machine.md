@@ -1,14 +1,11 @@
 ---
 title: Hack The Box - Codify
-date: 2024-08-08 13:33:37 +/-TTTT
+date: 2024-08-08 13:33:37
 categories:
-  - Hack The Box
+  - HTB
 tags:
   - HTB
 comments: true
-image:
-  path:
-  show_in_post: true
 ---
 
 HTB Codify Machine - https://www.hackthebox.com/machines/codify

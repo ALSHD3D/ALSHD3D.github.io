@@ -1,14 +1,11 @@
 ---
 title: Hack The Box - Bizness
-date: 2024-10-10 13:33:37 +/-TTTT
+date: 2024-10-10 13:33:37
 categories:
-  - Hack The Box
+  - HTB
 tags:
   - HTB
 comments: true
-image:
-  path:
-  show_in_post: true
 ---
 
 HTB Bizness Machine - https://www.hackthebox.com/machines/bizness

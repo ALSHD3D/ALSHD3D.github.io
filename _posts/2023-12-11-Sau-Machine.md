@@ -1,14 +1,11 @@
 ---
 title: Hack The Box - Sau
-date: 2023-12-11 13:33:37 +/-TTTT
+date: 2023-12-11 13:33:37
 categories:
-  - Hack The Box
+  - HTB
 tags:
   - HTB
 comments: true
-image:
-  path:
-  show_in_post: true
 ---
 
 HTB Sau Machine - https://www.hackthebox.com/machines/sau

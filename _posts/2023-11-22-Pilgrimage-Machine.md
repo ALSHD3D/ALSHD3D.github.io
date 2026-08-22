@@ -1,14 +1,11 @@
 ---
 title: Hack The Box - Pilgrimage
-date: 2023-11-22 13:33:37 +/-TTTT
+date: 2023-11-22 13:33:37
 categories:
-  - Hack The Box
+  - HTB
 tags:
   - HTB
 comments: true
-image:
-  path:
-  show_in_post: true
 ---
 
 HTB Pilgrimage Machine - https://www.hackthebox.com/machines/pilgrimage

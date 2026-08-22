@@ -1,14 +1,11 @@
 ---
 title: Hack The Box - MonitorsTwo
-date: 2023-08-09 13:33:37 +/-TTTT
+date: 2023-08-09 13:33:37
 categories:
-  - Hack The Box
+  - HTB
 tags:
   - HTB
 comments: true
-image:
-  path:
-  show_in_post: true
 ---
 
 HTB MonitorsTwo Machine - https://www.hackthebox.com/machines/monitorstwo

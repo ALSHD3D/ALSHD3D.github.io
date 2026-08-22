@@ -1,14 +1,11 @@
 ---
 title: Hack The Box - Topology
-date: 2023-09-05 13:33:37 +/-TTTT
+date: 2023-09-05 13:33:37
 categories:
-  - Hack The Box
+  - HTB
 tags:
   - HTB
 comments: true
-image:
-  path:
-  show_in_post: true
 ---
 
 HTB Topology Machine - https://www.hackthebox.com/machines/topology
