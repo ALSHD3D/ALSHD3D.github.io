@@ -43,7 +43,7 @@ gpg --gen-key
 ```
 
 #### First Try
-Try SSTI in real name field is vulnerable to SSTI (Server Side Template Injection). So for testing I put `{{7*7}}` payload in the name field. If it is vulnerable then it will give output `49` as a name.
+Try SSTI in real name field is vulnerable to SSTI (Server Side Template Injection). So for testing I put This SSTI payload in the name field. If it is vulnerable then it will give output `49` as a name.
 ```
 Real name: {{7\*7}}
 Email: anymail
