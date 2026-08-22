@@ -90,7 +90,7 @@ cd .git
 cat config
 ```
 
-![](Pasted%20image%2020260811182844.png)
+![](/assets/img/posts/pasted-image-20260811182844-.png)
 
 We will find a username, and a passwords, and a subdomain in a hidden .git directory in the current working directory: `http://cody:jh1usoih2bkjaspwe92@gitea.searcher.htb/cody/Searcher_site`
 
