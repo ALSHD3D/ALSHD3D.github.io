@@ -1,6 +1,6 @@
 ---
 title: Hack The Box - Pilgrimage
-date: 2023-11-22 13:33:37
+date: 2023-11-22 13:33:37 +0200
 categories:
   - HTB
 tags:

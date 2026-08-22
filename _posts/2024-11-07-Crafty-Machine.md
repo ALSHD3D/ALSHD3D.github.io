@@ -1,6 +1,6 @@
 ---
 title: Hack The Box - Crafty
-date: 2024-11-07 13:33:37
+date: 2024-11-07 13:33:37 +0200
 categories:
   - HTB
 tags:

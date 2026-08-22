@@ -1,6 +1,6 @@
 ---
 title: Hack The Box - Devvortex
-date: 2024-09-06 13:33:37
+date: 2024-09-06 13:33:37 +0200
 categories:
   - HTB
 tags:

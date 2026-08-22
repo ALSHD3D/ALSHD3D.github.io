@@ -1,6 +1,6 @@
 ---
 title: Hack The Box - Codify
-date: 2024-08-08 13:33:37
+date: 2024-08-08 13:33:37 +0200
 categories:
   - HTB
 tags:

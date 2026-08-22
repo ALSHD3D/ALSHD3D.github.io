@@ -1,6 +1,6 @@
 ---
 title: Hack The Box - CozyHosting
-date: 2024-05-06 13:33:37
+date: 2024-05-06 13:33:37 +0200
 categories:
   - HTB
 tags:

@@ -1,6 +1,6 @@
 ---
 title: Hack The Box - MonitorsTwo
-date: 2023-08-09 13:33:37
+date: 2023-08-09 13:33:37 +0200
 categories:
   - HTB
 tags:

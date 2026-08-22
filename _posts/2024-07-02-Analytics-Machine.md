@@ -1,6 +1,6 @@
 ---
 title: Hack The Box - Analytics
-date: 2024-07-02 13:33:37
+date: 2024-07-02 13:33:37 +0200
 categories:
   - HTB
 tags:

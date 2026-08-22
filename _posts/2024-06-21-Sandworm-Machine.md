@@ -1,6 +1,6 @@
 ---
 title: Hack The Box - Sandworm
-date: 2024-06-21 13:33:37
+date: 2024-06-21 13:33:37 +0200
 categories:
   - HTB
 tags:

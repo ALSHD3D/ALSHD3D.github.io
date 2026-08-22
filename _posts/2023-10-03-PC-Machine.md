@@ -1,6 +1,6 @@
 ---
 title: Hack The Box - PC
-date: 2023-10-03 13:33:37
+date: 2023-10-03 13:33:37 +0200
 categories:
   - HTB
 tags:

@@ -1,6 +1,6 @@
 ---
 title: Hack The Box - Bizness
-date: 2024-10-10 13:33:37
+date: 2024-10-10 13:33:37 +0200
 categories:
   - HTB
 tags:
