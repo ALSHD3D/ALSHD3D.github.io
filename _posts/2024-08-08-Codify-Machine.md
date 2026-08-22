@@ -16,7 +16,7 @@ Scan and enumerate the machine for open ports and services running on it:
 nmap -sC -sV -v -oN nmap.log 10.10.11.239
 ```
 
-![](/assets/img/posts/pasted-image-20260820103802-png.svg)
+![](assets/img/posts/pasted-image-20260820103802-png-svg.svg))
 
 I added the IP address to `/etc/hosts`:
 ```
@@ -28,7 +28,7 @@ I started off by browsing to `codify.htb` with Burp Suite enabled to intercept t
 - Editor - A simple page with a textarea to enter Node.js code and execute it.
 - Limitations - Notes restrictions like blocked access to certain modules like child_process and fs.
 
-![](/assets/img/posts/pasted-image-20260820104004-png.svg)
+![](assets/img/posts/pasted-image-20260820104004-png-svg.svg))
 
 It says it is using the **vm2 library** to run JavaScript code in a sandbox environment.
 
@@ -66,7 +66,7 @@ try {
 console.log(vm.run(code));
 ```
 
-![](/assets/img/posts/pasted-image-20260820105615-png.svg)
+![](assets/img/posts/pasted-image-20260820105615-png-svg.svg))
 
 Now, it's time to get a reverse shell.
 
@@ -103,7 +103,7 @@ console.log(vm.run(code));
 ```
 
 
-![](/assets/img/posts/pasted-image-20260820105222-png.svg)
+![](assets/img/posts/pasted-image-20260820105222-png-svg.svg))
 
 Great! now we got a shell as svc user. We have a user home directory “Joshua” but we can’t move into that directory. So, it’s time to enumerate.
 
@@ -114,7 +114,7 @@ cd /var/www/contact
 ls -la tickets.db
 ```
 
-![](/assets/img/posts/pasted-image-20260820110117-png.svg)
+![](assets/img/posts/pasted-image-20260820110117-png-svg.svg))
 
 It was a SQLite database file owned by the svc user, and this revealed a bcrypt password hash for the user `joshua: joshua$2a\$12$SOn8Pf6z8fO/nVsNbAAequ/P6vLRJJl7gCUEiYBU2iLHn4G/p/Zw2`
 
@@ -130,7 +130,7 @@ john --format=bcrypt --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
 
 This successfully cracked the hash, revealing the password.
 
-![[Pasted image /assets/img/posts/20250817003554-png.svg]]
+![](assets/img/posts/20250817003554-png-svg.svg))
 
 Results: `spongebob1`
 
@@ -156,9 +156,7 @@ joshua@codify:~$ sudo -l
 joshua@codify:~$ cat /opt/scripts/mysql-backup.sh
 ```
 
-![](/assets/img/posts/pasted-image-20260820111254-png.svg)
-
-Check the comparison it does for passwords, I think it is not a safe way to do that.
+![](/asset`pasted-image-20260820111254.png`e comparison it does for passwords, I think it is not a safe way to do that.
 
 After some research, I discovered that if the right side of == is not quoted, bash uses pattern matching instead of interpreting it as a string. If we give wildcard `*` it gives some weird output, it says Password confirmed, so we need to brute force the password.
 
@@ -167,9 +165,7 @@ joshua@codify:~$ sudo /opt/scripts/mysql-backup.sh
 Enter MySQL password for root: *
 ```
 
-![](/assets/img/posts/pasted-image-20260820111747-png.svg)
-
-Here is the Python script I used to brute force and extract the password.
+![](/asset`pasted-image-20260820111747.png`the Python script I used to brute force and extract the password.
 ```
 import string
 import subprocess
@@ -190,9 +186,7 @@ while not found:
         found = True
 ```
 
-![](/assets/img/posts/pasted-image-20260820111856-png.svg)
-
-Amazing, we got the root password.
+![](/asset`pasted-image-20260820111856.png` we got the root password.
 
 Let’s escalate our privilege.
 ```
