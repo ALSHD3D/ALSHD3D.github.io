@@ -1,14 +1,7 @@
----
-title: Hack The Box - Bizness
-date: 2024-10-10 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
-comments: true
----
 
 HTB Bizness Machine - https://www.hackthebox.com/machines/bizness
+
+### 10/04/2024
 
 ### Scanning & Enumeration
 Scan the HTB machine with Nmap tool
@@ -16,7 +9,7 @@ Scan the HTB machine with Nmap tool
 nmap -A -oN initial_scan 10.10.11.252
 ```
 
-![](/assets/img/posts/Pasted image 20260820151410.png)
+![](/assets/img/posts/Pasted%20image%2020260820151410.png)
 
 Port 80 has redirection to **bizness.htb**, so add it to our `/etc/hosts` file
 ```
@@ -94,7 +87,7 @@ We will got the shell !
 Searching for the user flag
 ```
 cd /home/ofbiz
-ca user.txt
+ca user.txt           # 9df0d25d1aa6603fb3e79ef4f94dd78b
 ```
 
 #### Upgrade our Shell
@@ -143,4 +136,14 @@ git clone https://github.com/duck-sec/Apache-OFBiz-SHA1-Cracker
 python3 OFBiz-crack.py --hash-string '$SHA$d$uP0_QaVBpDWFeo8-dRzDqRwXQ2I'
 ```
 
-![](/assets/img/posts/Pasted image 20250817005254.png)
+![[Pasted image 20250817005254.png]]
+The password is: `monkeybizness`
+
+Switch to the root user
+```
+ofbiz@bizness:/opt/ofbiz/runtime/data/derby/ofbiz/seg0$ su
+Password: monkeybizness
+
+cd /root
+cat root.txt       # 0e1da5676a8ffc89875439be85fef2be, or 8d720890ded7a16a9bfc969a26a92121
+```

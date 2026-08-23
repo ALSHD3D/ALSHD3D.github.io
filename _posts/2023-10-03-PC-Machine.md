@@ -1,14 +1,7 @@
----
-title: Hack The Box - PC
-date: 2023-10-03 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
-comments: true
----
 
 HTB PC Machine - https://www.hackthebox.com/machines/pc
+
+### 03/08/2023
 
 ### Scanning & Enumeration
 Scan the machine with Nmap tool
@@ -87,7 +80,7 @@ ssh sau@10.10.11.214
 Password: HereIsYourPassWord1431
 
 sau@pc~$ ls
-sau@pc~$ cat user.txt
+sau@pc~$ cat user.txt         # 4e1b3d3bf945988057637ee43c87ab22
 ```
 
 ### Privilege Escalation
@@ -168,7 +161,7 @@ We should see `127.0.0.1:8000` running.
 #### Accessing the Internal Service
 Access the server on the browser by entering the following URL: http://127.0.0.1:8000/
 
-!/assets/img/posts/Pasted image 20250816233102.png
+![[Pasted image 20250816233102.png]]
 
 After trying the default credentials without success, I conducted a search for vulnerabilities and discovered that `pyLoad` page has a vulnerability (CVE-2023-0297) and got an exploit to this CVE using Python: https://github.com/JacobEbben/CVE-2023-0297
 
@@ -186,5 +179,5 @@ We got a shell on our listener
 ```
 root@pc:~# cd /
 root@pc:~# cd root
-root@pc:~# cat root.txt
+root@pc:~# cat root.txt         # 6ab1a98ff11ae588a25d3beeea477a0a
 ```

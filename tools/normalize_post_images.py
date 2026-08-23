@@ -54,7 +54,7 @@ for md in sorted(POSTS.glob('*.md')):
             target_path.write_text(svg, encoding='utf-8')
             created.add(str(target_path.relative_to(ROOT)))
         # replace the whole match with standard markdown image link (no leading slash)
-        new_token = f'![]({target})'
+        new_token = f'![](/assets/img/posts/{target})'
         a,b = span
         text = text[:a] + new_token + text[b:]
     if text != orig:

@@ -31,11 +31,11 @@ for md in sorted(POSTS.glob('*.md')):
             full = m.group(0)
             path = m.group(2)
             slug = m.group(3)
-            token = f'![]({path})'
+            token = f'![](/assets/img/posts/{path})'
             # if line is exactly the token (maybe with spaces)
             if line.strip() == full:
                 # normalize to no leading slash
-                new_tok = f'![]({path})'
+                new_tok = f'![](/assets/img/posts/{path})'
                 if new_tok != full:
                     line = line.replace(full, new_tok)
                     changed = True

