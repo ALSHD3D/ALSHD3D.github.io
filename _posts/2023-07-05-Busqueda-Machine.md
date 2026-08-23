@@ -2,7 +2,7 @@
 title: Hack The Box - Busqueda
 date: 2023-07-05 13:33:37 +0200
 categories:
-  - HTB
+  - HackTheBox
 tags:
   - HTB
 comments: true
@@ -90,7 +90,7 @@ cd .git
 cat config
 ```
 
-![](/assets/img/posts/pasted-image-20260811182844-.png)
+![](Pasted%20image%2020260811182844.png)
 
 We will find a username, and a passwords, and a subdomain in a hidden .git directory in the current working directory: `http://cody:jh1usoih2bkjaspwe92@gitea.searcher.htb/cody/Searcher_site`
 
@@ -101,7 +101,7 @@ And we can login to the site: `gitea.searcher.htb` , with the user and credentia
 - Username: cody
 - Password: jh1usoih2bkjaspwe92
 
-![898](pasteimage.png)
+![700](pastedimage 2)
 
 Exploring the interface hinted at possible privilege escalation paths, but nothing immediately exploitable.
 
