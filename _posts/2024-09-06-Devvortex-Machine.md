@@ -125,7 +125,7 @@ Enter password: P4ntherg0t1n5r3c0n##
 mysql> show databases;
 ```
 
-![Machine generated alternative text: . devvortex . htb/administrator\$ mysql Enter password: or Welcome to the MySQL monitor . Commands end with , Your MySQL connection id is 81 Server version: 8.0.35-0ubuntuø.2ø.04.1 (Ubuntu) Copyright (c) 2000, 2023, Oracle and/or its affiliates. -u lewis Oracle is a registered trademark of Oracle Corporation and/or its affiliates. Other names may be trademarks of their respective owners . or \'\\h\' for help. Type \'\\c\' to clear the current input statement. Type \'help;\' mysql\> show databases; Database information \_ schema joomla performance \_ schema I (0.00 sec) rows in set ](018_Devvortex_-_Easy_Machine_007.png){width="7.0625in" height="3.9375in"}
+![](/assets/img/posts/018_Devvortex_-_Easy_Machine_007.png)
 
 Read MySQL DB table
 ```

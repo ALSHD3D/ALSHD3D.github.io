@@ -24,7 +24,7 @@ The output of the Nmap tool will be:
 
 Since we know the target is hosting a webpage on port 80, so lets visit the site and look around testing input fields.
 
-![984](021_Perfection_-_Easy_Machine_000.png)
+![984](/assets/img/posts/021_Perfection_-_Easy_Machine_000.png)
 
 Web app version
 WEBrick/1.7.0 (Ruby/3.0.2/2021-07-07)
