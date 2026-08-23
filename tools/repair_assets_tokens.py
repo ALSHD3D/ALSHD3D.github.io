@@ -43,8 +43,8 @@ for md in sorted(POSTS.glob('*.md')):
                 # inline: replace with backticked original name
                 # attempt to derive original name from slug
                 s = slug
-                if s.endswith('-png'):
-                    origname = s[:-len('-png')] + '.png'
+                if s.endswith('.png'):
+                    origname = s[:-len('.png')] + '.png'
                 elif s.endswith('-.png'):
                     origname = s[:-len('-.png')] + '.png'
                 elif s.endswith('.svg'):

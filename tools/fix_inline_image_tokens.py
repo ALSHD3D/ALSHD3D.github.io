@@ -8,7 +8,7 @@ img_token_re = re.compile(r'!\[]\((assets/img/posts/([^\)\s]+)\))')
 
 def original_name(slug):
     s = slug
-    for suffix in ['-png', '-.png', '-svg.svg', '.svg']:
+    for suffix in ['.png', '-.png', '-svg.svg', '.svg']:
         if s.endswith(suffix):
             s = s[: -len(suffix)]
             break

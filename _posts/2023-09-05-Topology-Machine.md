@@ -24,7 +24,7 @@ Add the machine Ip to: `/etc/hosts`
 
 Navigating to the site:
 
-![](assets/img/posts/pasted-image-20260819192048-png))
+![](assets/img/posts/pasted-image-20260819192048.png))
 
 We will found a link: <http://latex.topology.htb/equation.php> , so we will add it to the: `/etc/hosts`
 	`10.10.11.217 topology.htb latex.topology.htb`
@@ -47,11 +47,11 @@ Fuzzing for subdomains eventually we get three hits. The first one `dev` retur
 
 Browsing to `latex` we see this:
 
-![](assets/img/posts/pasted-image-20260822103845-png))
+![](assets/img/posts/pasted-image-20260822103845.png))
 
 I decide to take a look at `equation.php`
 
-![](assets/img/posts/pasted-image-20260822103858-png))
+![](assets/img/posts/pasted-image-20260822103858.png))
 
 
 
@@ -71,7 +71,7 @@ It is found that there may be a file reading vulnerability. so trying some comma
 \closein\file
 ```
 
-![](assets/img/posts/20250816232104-png))
+![](assets/img/posts/20250816232104.png))
 
 **Now There are Two Problems:**
 - How to read multiple lines?
@@ -162,7 +162,7 @@ emily@pilgrimage:~$ ./pspy64
 ```
 We notice some interesting activity, and some timing tasks were found too
 
-![](assets/img/posts/20250816232348-png))
+![](assets/img/posts/20250816232348.png))
 
 In the scheduled task, search for the file with the suffix `.plt` in the` /opt/gnuplot` directory with root authority and execute it directly, then you can write any `.plt` file to execute our command.
 

@@ -36,7 +36,7 @@ echo "10.10.11.242 devvortex.htb" | sudo tee -a /etc/hosts
 
 And navigate to the **devvortex.htb**, to see what we have got
 
-![](assets/img/posts/20250817003954-png))
+![](assets/img/posts/20250817003954.png))
 
 The first step was directory enumeration using two wordlists
 ```
@@ -50,15 +50,15 @@ output:
 
 Or we can go to: `/robots.txt` , this is a Joomla CMS.
 
-![](assets/img/posts/20250817004059-png))
+![](assets/img/posts/20250817004059.png))
 
 Navigating to `/dev` subdomain, to see what we got here
 
- ![](assets/img/posts/20250817004108-png))
+ ![](assets/img/posts/20250817004108.png))
 
 Navigating to`/administrator` , to see what is inside of it
 
-![](assets/img/posts/20250817004133-png))
+![](assets/img/posts/20250817004133.png))
 
 ### Exploitation & Gaining Access
 And we confirmed that it is a Joomla version, so lets looking for vulnerabilities for it in google, we found CVE-2023-2375 which affecting Joomla! < 4.2.8:
@@ -148,7 +148,7 @@ To list the programs that can run via sudo without password
 logan@devvortex:~$ sudo -l
 ```
 
-![](assets/img/posts/20250817004501-png))
+![](assets/img/posts/20250817004501.png))
 
 After searching google for vulnerabilities in apport-cli 2.26.0 and earlier with CVE-2023-26604 https://github.com/advisories/GHSA-8989-8fhv-vq42
 

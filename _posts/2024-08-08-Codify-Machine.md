@@ -16,7 +16,7 @@ Scan and enumerate the machine for open ports and services running on it:
 nmap -sC -sV -v -oN nmap.log 10.10.11.239
 ```
 
-![](assets/img/posts/pasted-image-20260820103802-png))
+![](assets/img/posts/pasted-image-20260820103802.png))
 
 I added the IP address to `/etc/hosts`:
 ```
@@ -28,7 +28,7 @@ I started off by browsing to `codify.htb` with Burp Suite enabled to intercept t
 - Editor - A simple page with a textarea to enter Node.js code and execute it.
 - Limitations - Notes restrictions like blocked access to certain modules like child_process and fs.
 
-![](assets/img/posts/pasted-image-20260820104004-png))
+![](assets/img/posts/pasted-image-20260820104004.png))
 
 It says it is using the **vm2 library** to run JavaScript code in a sandbox environment.
 
@@ -66,7 +66,7 @@ try {
 console.log(vm.run(code));
 ```
 
-![](assets/img/posts/pasted-image-20260820105615-png))
+![](assets/img/posts/pasted-image-20260820105615.png))
 
 Now, it's time to get a reverse shell.
 
@@ -103,7 +103,7 @@ console.log(vm.run(code));
 ```
 
 
-![](assets/img/posts/pasted-image-20260820105222-png))
+![](assets/img/posts/pasted-image-20260820105222.png))
 
 Great! now we got a shell as svc user. We have a user home directory “Joshua” but we can’t move into that directory. So, it’s time to enumerate.
 
@@ -114,7 +114,7 @@ cd /var/www/contact
 ls -la tickets.db
 ```
 
-![](assets/img/posts/pasted-image-20260820110117-png))
+![](assets/img/posts/pasted-image-20260820110117.png))
 
 It was a SQLite database file owned by the svc user, and this revealed a bcrypt password hash for the user `joshua: joshua$2a\$12$SOn8Pf6z8fO/nVsNbAAequ/P6vLRJJl7gCUEiYBU2iLHn4G/p/Zw2`
 
@@ -130,7 +130,7 @@ john --format=bcrypt --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
 
 This successfully cracked the hash, revealing the password.
 
-![](assets/img/posts/20250817003554-png))
+![](assets/img/posts/20250817003554.png))
 
 Results: `spongebob1`
 

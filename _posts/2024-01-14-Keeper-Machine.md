@@ -27,7 +27,7 @@ sudo mousepad /etc/hosts
 
 Lets navigate to it again
 
-![](assets/img/posts/pasted-image-20260820000528-png))
+![](assets/img/posts/pasted-image-20260820000528.png))
 
 We can't find any credentials on the source code of the page. So, we can try a couple of default credentials or even look up on the internet for the default creds for Request Tracker.
 
@@ -38,11 +38,11 @@ The credential worked and we gained access to the portal. So, we can explore dif
 ### Exploitation & Gaining Access
 After spending some time around, we can find a users tab under the Admin section and over there we can see that there is another user named `lnorgaard`. Now, as we have access to the portal as root, we can try to read this user's password or change it.
 
-![](assets/img/posts/pasted-image-20260820000928-png))
+![](assets/img/posts/pasted-image-20260820000928.png))
 
 When we click on the user, it gives us all the details as shown below
 
-![](assets/img/posts/pasted-image-20260820000952-png))
+![](assets/img/posts/pasted-image-20260820000952.png))
 
 The most interesting part is the comment section, where we can see the plain-text password for this user. Now that we have a pair of username and password, we can try to use them to gain SSH access to the machine.
 ```
@@ -81,7 +81,7 @@ When we investigated KeePass\'s CVE, we found that There was a PoC: <https://git
 python3 poc.py -d KeePassDumpFull.dmp
 ```
 
-![](assets/img/posts/pasted-image-20260820070710-png))
+![](assets/img/posts/pasted-image-20260820070710.png))
 
 The confirmed password was broken with special characters (●), making it impossible to confirm accurately, so I did a Google search to infer it and found that the Danish language was broken. Through Googling, I was able to guess it was strawberry cream porridge `rødgrød med fløde` in Danish.
 
@@ -91,7 +91,7 @@ As a result of searching for a tool to open it, the tool is provided on the KeeP
 Using the KeePass program on windows machine, to open `passcodes.kdbx` file with master password: `rødgrød med fløde`
 
 `passcode.kdbx` contains the contents of the ppk file for my root account.
-![](assets/img/posts/20250816234459-png))
+![](assets/img/posts/20250816234459.png))
 
 It was possible to copy the contents , save them to a file: key.txt
 Then download putty from <https://www.puttygen.com/download.php?val=4> , install it, then go to: `C:\Program Files\PuTTY` and open: `puttygen.exe` , then from: File > Load private key
