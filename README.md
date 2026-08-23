@@ -1,4 +1,4 @@
-The Goal:
+The Intention:
 Document what I learn from others, so others can learn from me.
 
 ليس من شروط الإنجاز وجود إسمك في التاريخ !
