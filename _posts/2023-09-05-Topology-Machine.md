@@ -1,7 +1,15 @@
+---
+title: Hack The Box - Perfection
+date: 2023-09-05 13:33:37 +0200
+categories:
+  - HackTheBox
+tags:
+  - HTB
+comments: true
+---
 
 HTB Topology Machine - https://www.hackthebox.com/machines/topology
 
-### 05/09/2023
 
 ### Scanning & Enumeration
 Scan the machine first with Nmap tool
@@ -64,7 +72,7 @@ It is found that there may be a file reading vulnerability. so trying some comma
 \closein\file
 ```
 
-![[Pasted image 20250816232104.png]]
+![](/assets/img/posts/Pasted image 20250816232104.png)
 
 **Now There are Two Problems:**
 - How to read multiple lines?
@@ -165,7 +173,7 @@ emily@pilgrimage:~$ ./pspy64
 ```
 We notice some interesting activity, and some timing tasks were found too
 
-![[Pasted image 20250816232348.png]]
+![](/assets/img/posts/Pasted image 20250816232348.png)
 
 In the scheduled task, search for the file with the suffix `.plt` in the` /opt/gnuplot` directory with root authority and execute it directly, then you can write any `.plt` file to execute our command.
 

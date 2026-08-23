@@ -1,7 +1,15 @@
+---
+title: Hack The Box - Bizness
+date: 2024-10-10 13:33:37 +0200
+categories:
+  - HackTheBox
+tags:
+  - HTB
+comments: true
+---
 
 HTB Bizness Machine - https://www.hackthebox.com/machines/bizness
 
-### 10/04/2024
 
 ### Scanning & Enumeration
 Scan the HTB machine with Nmap tool
@@ -136,7 +144,7 @@ git clone https://github.com/duck-sec/Apache-OFBiz-SHA1-Cracker
 python3 OFBiz-crack.py --hash-string '$SHA$d$uP0_QaVBpDWFeo8-dRzDqRwXQ2I'
 ```
 
-![[Pasted image 20250817005254.png]]
+![](/assets/img/posts/Pasted image 20250817005254.png)
 The password is: `monkeybizness`
 
 Switch to the root user

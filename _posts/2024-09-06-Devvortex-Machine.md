@@ -1,7 +1,14 @@
+---
+title: Hack The Box - Devvortex
+date: 2024-09-06 13:33:37 +0200
+categories:
+  - HackTheBox
+tags:
+  - HTB
+comments: true
+---
 
 HTB Devvortex Machine - https://www.hackthebox.com/machines/devvortex
-
-### 06/03/2024
 
 ### Scanning & Enumeration
 Scan the machine with Nmap first
@@ -29,7 +36,7 @@ echo "10.10.11.242 devvortex.htb" | sudo tee -a /etc/hosts
 
 And navigate to the **devvortex.htb**, to see what we have got
 
-![[Pasted image 20250817003954.png]]
+![](/assets/img/posts/Pasted image 20250817003954.png)
 
 The first step was directory enumeration using two wordlists
 ```
@@ -43,15 +50,15 @@ output:
 
 Or we can go to: `/robots.txt` , this is a Joomla CMS.
 
-![[Pasted image 20250817004059.png]]
+![](/assets/img/posts/Pasted image 20250817004059.png)
 
 Navigating to `/dev` subdomain, to see what we got here
 
- ![[Pasted image 20250817004108.png]]
+ ![](/assets/img/posts/Pasted image 20250817004108.png)
 
 Navigating to`/administrator` , to see what is inside of it
 
-![[Pasted image 20250817004133.png|918]]
+![](/assets/img/posts/Pasted image 20250817004133.png|918)
 
 ### Exploitation & Gaining Access
 And we confirmed that it is a Joomla version, so lets looking for vulnerabilities for it in google, we found CVE-2023-2375 which affecting Joomla! < 4.2.8:
@@ -156,7 +163,7 @@ To list the programs that can run via sudo without password
 logan@devvortex:~$ sudo -l
 ```
 
-![[Pasted image 20250817004501.png]]
+![](/assets/img/posts/Pasted image 20250817004501.png)
 
 After searching google for vulnerabilities in apport-cli 2.26.0 and earlier with CVE-2023-26604 https://github.com/advisories/GHSA-8989-8fhv-vq42
 

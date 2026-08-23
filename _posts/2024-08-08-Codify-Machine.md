@@ -1,7 +1,15 @@
+---
+title: Hack The Box - Codify
+date: 2024-08-08 13:33:37 +0200
+categories:
+  - HackTheBox
+tags:
+  - HTB
+comments: true
+---
 
 HTB Codify Machine - https://www.hackthebox.com/machines/codify
 
-### 08-02-2024
 
 ### Scanning & Enumeration
 Scan and enumerate the machine for open ports and services running on it:
@@ -123,7 +131,7 @@ john --format=bcrypt --wordlist=/usr/share/wordlists/rockyou.txt hash.txt
 
 This successfully cracked the hash, revealing the password.
 
-![[Pasted image 20250817003554.png]]
+![](/assets/img/posts/Pasted image 20250817003554.png)
 
 Results: `spongebob1`
 

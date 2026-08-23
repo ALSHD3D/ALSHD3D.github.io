@@ -1,7 +1,15 @@
+---
+title: Hack The Box - Analytics
+date: 2024-07-02 13:33:37 +0200
+categories:
+  - HackTheBox
+tags:
+  - HTB
+comments: true
+---
 
 HTB Analytics Machine - https://www.hackthebox.com/machines/analytics
 
-### 20/01/2023
 
 ### Scanning & Enumeration
 Scan the machine with Nmap tool
@@ -59,7 +67,7 @@ After analyzing the results of `linpeas` script, a plain text of username and pa
 `META_PASS=An4lytics_ds20223#
 `META_USER=metalytics`
 
-![[Pasted image 20250817003116.png]]
+![](/assets/img/posts/Pasted image 20250817003116.png)
 ``
 Lets log-in via SSH
 ```
@@ -71,7 +79,7 @@ cat user.txt                   # 50a6c93abfd7c2293045a2980ebc6617
 
 While reviewing the results of `linpeas` again, it was discovered that the machine's version was Ubuntu 22.04.3
 
-![[Pasted image 20250817003157.png]]
+![](/assets/img/posts/Pasted image 20250817003157.png)
 
 After extensive searching on Google, it was determined that the machine's version was susceptible to:
 CVE-2023-2640 and CVE-2023-32629 : https://www.crowdstrike.com/blog/crowdstrike-discovers-new-container-exploit/

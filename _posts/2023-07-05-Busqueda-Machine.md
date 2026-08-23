@@ -1,7 +1,15 @@
+---
+title: Hack The Box - Perfection
+date: 2023-07-05 13:33:37 +0200
+categories:
+  - HackTheBox
+tags:
+  - HTB
+comments: true
+---
 
 HTB Busqueda Machine - https://www.hackthebox.com/machines/busqueda
 
-### 05/07/2023
 
 ### Scanning & Enumeration
 Scan the `Busqueda` machine

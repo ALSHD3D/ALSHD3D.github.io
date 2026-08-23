@@ -1,6 +1,14 @@
+---
+title: Hack The Box - Keeper
+date: 2024-01-14 13:33:37 +0200
+categories:
+  - HackTheBox
+tags:
+  - HTB
+comments: true
+---
 
 HTB Keeper Machine - https://www.hackthebox.com/machines/keeper
-### 01/11/2023
 
 ### Scanning & Enumeration
 Scanning the machine first with Nmap tool 
@@ -83,7 +91,7 @@ As a result of searching for a tool to open it, the tool is provided on the KeeP
 Using the KeePass program on windows machine, to open `passcodes.kdbx` file with master password: `rødgrød med fløde`
 
 `passcode.kdbx` contains the contents of the ppk file for my root account.
-![[Pasted image 20250816234459.png]]
+![](/assets/img/posts/Pasted image 20250816234459.png)
 
 It was possible to copy the contents , save them to a file: key.txt
 Then download putty from <https://www.puttygen.com/download.php?val=4> , install it, then go to: `C:\Program Files\PuTTY` and open: `puttygen.exe` , then from: File > Load private key

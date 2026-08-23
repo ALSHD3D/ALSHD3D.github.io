@@ -1,7 +1,15 @@
+---
+title: Hack The Box - Sau
+date: 2023-12-11 13:33:37 +0200
+categories:
+  - HackTheBox
+tags:
+  - HTB
+comments: true
+---
 
 HTB Sau Machine - https://www.hackthebox.com/machines/sau
 
-### 25/10/2023
 
 ### Scanning & Enumeration
 Scan the machine with Nmap tool
@@ -31,7 +39,7 @@ I'd advise you to play around with the request-baskets to understand what exactl
 
 ### Exploitation & Gaining Access
 First, let's create a request basket and adjust its settings as following
-![[Pasted image 20250816233929.png]]
+![](/assets/img/posts/Pasted image 20250816233929.png)
 
 1- insecure_tls                    set to true will bypass certificate verification
 2- proxy_response              set to true will send response of the forwarded server back to our client
