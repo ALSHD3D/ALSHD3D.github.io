@@ -10,6 +10,7 @@ comments: true
 
 HTB Devvortex Machine - https://www.hackthebox.com/machines/devvortex
 
+
 ### Scanning & Enumeration
 Scan the machine with Nmap first
 ```
@@ -154,7 +155,7 @@ SSH credentials in play! Connecting to the digital realm with finesse.
 ssh logan@10.10.11.242
 tequieromucho
 
-logan@devvortex:~$ cat user.txt    # bb7c18c7da7caaf1d1e77d32c2aa57f9
+logan@devvortex:~$ cat user.txt
 ```
 
 #### 2- Searching for Misconfiguration
@@ -211,5 +212,5 @@ Then write this command, to back to our terminal again
 
 Expose the root flag
 ```
-root@devvortex:/home/logan# cat /root/root.txt             # 3a6e38c6b317f7eeb5ce5cb4c9833d73
+root@devvortex:/home/logan# cat /root/root.txt
 ```

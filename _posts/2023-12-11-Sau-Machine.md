@@ -110,7 +110,7 @@ stty raw -echo;fg
 Looking for the user flag
 ```
 puma@sau:/home$ cd /home/puma
-puma@sau:/home$ cat user.txt               # c25c801d5709fc16211685794abde804
+puma@sau:/home$ cat user.txt
 ```
 
 What we can run as a sudo without a password
@@ -134,5 +134,5 @@ puma@sau:/home$ !sh
 puma@sau:/home$ !/bin/bash
 
 puma@sau:/home$ cd /root
-puma@sau:/home$ cat root.txt      # 3a3613459b6bd9f69b301a29d339a236
+puma@sau:/home$ cat root.txt
 ```

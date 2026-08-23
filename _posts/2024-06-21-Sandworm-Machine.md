@@ -206,7 +206,7 @@ Password: quietLiketheWind22
 
 silentobserver@sandworm:~$ whoami
 silentobserver@sandworm:~$ ls
-silentobserver@sandworm:~$ cat user.txt           # bc9d7d02107e9efd57b4a9f84a01707b
+silentobserver@sandworm:~$ cat user.txt
 ```
 
 #### 1- Using pspy Script
@@ -286,5 +286,5 @@ atlas@sandworm:/opt/tipnet$ firejail --join=24654
 atlas@sandworm:/opt/tipnet$ su -
 root@sandworm:~#
 root@sandworm:~# cd /root
-root@sandworm:~# cat root.txt         # f24df2047eb6b877417c8a43ee71d54b
+root@sandworm:~# cat root.txt
 ```

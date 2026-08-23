@@ -8,7 +8,6 @@ tags:
 comments: true
 ---
 
-
 HTB Crafty Machine - https://www.hackthebox.com/machines/crafty
 
 
@@ -103,7 +102,7 @@ Searching for the user flag
 c:\users\svc_minecraft\server>cd ..
 c:\users\svc_minecraft\>cd Desktop
 c:\users\svc_minecraft\Desktop>dir
-c:\users\svc_minecraft\Desktop>type user.txt       # 1da972a4ee9f15fcb00314c13a885877
+c:\users\svc_minecraft\Desktop>type user.txt
 ```
 
 ### Privilege Escalation
@@ -221,5 +220,5 @@ meterpreter > cd users
 meterpreter > cd administrator
 meterpreter > cd desktop
 meterpreter > dir
-meterpreter > cat root.txt               # 74564b564a5c443d4e872d5c6efa080a
+meterpreter > cat root.txt
 ```

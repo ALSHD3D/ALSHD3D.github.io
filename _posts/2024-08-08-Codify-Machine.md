@@ -139,7 +139,7 @@ With joshua\'s credentials, I was able to switch users and escalate privileges u
 ```
 su joshua
 Password: spongebob1
-cat /home/joshua/user.txt   # 63935fc1ef4d92aab9255b0eaae86490
+cat /home/joshua/user.txt
 ```
 
 Using SSH with this credentials
@@ -200,5 +200,5 @@ Let’s escalate our privilege.
 joshua@codify:~$ su root
 Password: kljh12k3jhaskjh12kjh3
 root@codify:/home/joshua# cd /root
-cat root.txt                             # d90e86c3575996503b7e5ebfca41d75c
+cat root.txt
 ```

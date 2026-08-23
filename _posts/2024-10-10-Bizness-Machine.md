@@ -95,7 +95,7 @@ We will got the shell !
 Searching for the user flag
 ```
 cd /home/ofbiz
-ca user.txt           # 9df0d25d1aa6603fb3e79ef4f94dd78b
+ca user.txt
 ```
 
 #### Upgrade our Shell
@@ -153,5 +153,5 @@ ofbiz@bizness:/opt/ofbiz/runtime/data/derby/ofbiz/seg0$ su
 Password: monkeybizness
 
 cd /root
-cat root.txt       # 0e1da5676a8ffc89875439be85fef2be, or 8d720890ded7a16a9bfc969a26a92121
+cat root.txt
 ```

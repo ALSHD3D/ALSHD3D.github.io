@@ -1,7 +1,14 @@
+---
+title: Hack The Box - MonitorsTwo
+date: 2023-08-09 13:33:37 +0200
+categories:
+  - HackTheBox
+tags:
+  - HTB
+comments: true
+---
 
 HTB MonitorsTwo Machine - https://www.hackthebox.com/machines/monitorstwo
-
-### 06/08/2023
 
 ### Scanning & Enumeration
 Scan the HTB machine  with Nmap tool
@@ -16,7 +23,7 @@ Output:
 
 Lets navigate to: http://10.10.11.211:80 page
 
-![746](Screenshot_1.png)
+![746](/assets/img/posts/Screenshot_1.png)
 
 - Trying many default credential, but we got nothing
 
@@ -33,7 +40,7 @@ After reading the article, I understand the principle of the vulnerability. Ther
 The `get_client_addr()` function in this code is to obtain the client's IP address. The way to obtain it is to read from these HTTP headers in sequence.
 After obtaining the IP, obtain the hostname and compare it with the value read in the database. If they are equal, then Can be authorized successfully
 
-![[Pasted image 20250816231535.png]]
+![](/assets/img/posts/Pasted image 20250816231535.png)
 
 These headers are under our control, we just need to add in the request to bypass detection:
 	`Forwarded-For: 127.0.0.1`
@@ -43,19 +50,19 @@ And then add:
 
 ##### 2- The Code Execution Vulnerability
 
-![[Pasted image 20250816231604.png]]
+![](/assets/img/posts/Pasted image 20250816231604.png)
 
 You can see that different processing requests are determined according to the action field
 
 `poll_for_data()` function exists command execution
 
-![[Pasted image 20250816231637.png]]
+![](/assets/img/posts/Pasted image 20250816231637.png)
 
 You may see that `$poller_id` is spliced ​​into the first parameter of `proc_open()`
  
 The first parameter is the command to be executed, so if it can be controlled by us, then any command can be executed
 
-![[Pasted image 20250816231646.png]]
+![](/assets/img/posts/Pasted image 20250816231646.png)
 
 And it can be manipulated by us, so `get_nfilter_request_var()` Use this function to filter the obtained `poller_id` instead of using `get_filter_request_var()`
 The former allows characters, while the latter only allows integers, so we can insert malicious characters here to control the executed commands
@@ -110,7 +117,7 @@ Password: funkymonkey
 We will found the user flag
 ```
  marcus@monitorstwo:~$ ls
- marcus@monitorstwo:~$ cat user.txt \# 686dbcf73b28ca2803dd5892f82811ee
+ marcus@monitorstwo:~$ cat user.txt
 ```
 
 Know the docker version to checked for vulnerabilities:
@@ -200,5 +207,5 @@ cd /bin
 ./bash -p
 bash-5.1# whoami                  # we will be root
 bash-5.1# cd /root
-bash-5.1# cat root.txt            # a0277f865dbcf909a89ac113e03cc148
+bash-5.1# cat root.txt
 ```

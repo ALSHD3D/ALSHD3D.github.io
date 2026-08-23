@@ -79,7 +79,7 @@ We will got a shell on our listener
 ```
 whoami            // svc
 cd /home/svc
-cat user.txt      // 51ae89cf7b43dc9aa4c2a3425b3f722c
+cat user.txt
 ```
 
 ### Privilege Escalation
@@ -155,7 +155,7 @@ svc@busqueda:~$ ls -la /bin/bash
 svc@busqueda:~$ /bin/bash -p
 whoami               // root
 cd /root
-cd root.txt          // 55bb63fbc1b3fb11aeacfea15f7d7267
+cd root.txt
 ```
 
 #### Using Docker
@@ -229,5 +229,5 @@ ls -la /bin/bash
 /bin/bash -p
 whoami                   // root
 cd /root
-cd root.txt              // 55bb63fbc1b3fb11aeacfea15f7d7267
+cd root.txt
 ```

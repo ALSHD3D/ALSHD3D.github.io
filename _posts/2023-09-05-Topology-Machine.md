@@ -1,5 +1,5 @@
 ---
-title: Hack The Box - Perfection
+title: Hack The Box - Topology
 date: 2023-09-05 13:33:37 +0200
 categories:
   - HackTheBox
@@ -25,7 +25,7 @@ Add the machine Ip to: `/etc/hosts`
 
 Navigating to the site:
 
-![556](Pasted%20image%2020260819192048.png)
+![556](/assets/img/posts/Pasted%20image%2020260819192048.png)
 
 We will found a link: <http://latex.topology.htb/equation.php> , so we will add it to the: `/etc/hosts`
 	`10.10.11.217 topology.htb latex.topology.htb`
@@ -137,7 +137,7 @@ We Now have a username and password `vdaisley:calculus20`
 
 We can log-in to: `dev.topology.htb`
 
-![596](Pasted%20image%2020260819203313.png)
+![596](/assets/img/posts/Pasted%20image%2020260819203313.png)
 
 Lets try to login with SSH:
 ```
@@ -145,7 +145,7 @@ ssh vdaisley@10.10.11.217
 Password: calculus20
 
 -bash-5.0$ ls
--bash-5.0$ cat user.txt           # 149601c4881d3fcf2f9b009c0df84071
+-bash-5.0$ cat user.txt
 ```
 
 ### Privilege Escalation
@@ -160,7 +160,7 @@ Password: calculus20
 -bash-5.0/tmp$ ./linpeas
 ```
 
-![767](Pasted%20image%2020260819203811.png)
+![767](/assets/img/posts/Pasted%20image%2020260819203811.png)
 
 There is an unusual directory that I can write to: `/opt/gnuplot`. Weird, only write permissions, no read permissions.
 
@@ -203,5 +203,5 @@ bash-5.0# whoami          //root
 Find the root user
 ```
 cd /root
-cat root.txt         # b3fdfefeed6ecc30d420c23aabe04552
+cat root.txt
 ```

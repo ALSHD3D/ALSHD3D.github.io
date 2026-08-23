@@ -138,7 +138,7 @@ After we got the credential, we can logged in via SSH with `emily` user, and fou
 ssh emily@10.10.11.219
 abigchonkyboi123
 
-emily@pilgrimage:~$ cat user.txt \# accf577a447734f32aac8e7eb773cd49
+emily@pilgrimage:~$ cat user.txt
 ```
 
 ### Privilege Escalation
@@ -202,5 +202,5 @@ Back to our listener, and we got a shell
 ```
 id
 cd /root
-cat root.txt          # 05d6b0d8c5872f31344a7b735bc1c637
+cat root.txt
 ```

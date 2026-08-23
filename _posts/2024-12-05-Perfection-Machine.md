@@ -20,7 +20,7 @@ sudo nmap -Pn -sC -sV -oA 10.129.216.68
 
 The output of the Nmap tool will be:
 
-![720](Pasted%20image%2020260822081454.png)
+![720](/assets/img/posts/Pasted%20image%2020260822081454.png)
 
 Since we know the target is hosting a webpage on port 80, so lets visit the site and look around testing input fields.
 
@@ -133,7 +133,7 @@ susan@perfection:~/ruby_app$ find / -name "user.txt" -exec cat {} ; 2>/dev/null
 
 or
 susan@perfection:~/ruby_app$ cd/home/susan
-susan@perfection:~/ruby_app$ cat user.txt                                              # 96af8a51d364ce1fb517a44455e709ed
+susan@perfection:~/ruby_app$ cat user.txt
 ```
 
 #### Enumerating the Target
@@ -223,5 +223,5 @@ Once we do, we found that `susan` user is able to act as root.
 
 Searching for the root flag
 ```
-susan@perfection:~/ruby_app$ find / -name "root.txt" -exec cat {} \;        # e5158b6af76757ddac0251405f1b46ae
+susan@perfection:~/ruby_app$ find / -name "root.txt" -exec cat {} \;
 ```
