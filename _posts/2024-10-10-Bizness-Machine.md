@@ -143,14 +143,4 @@ git clone https://github.com/duck-sec/Apache-OFBiz-SHA1-Cracker
 python3 OFBiz-crack.py --hash-string '$SHA$d$uP0_QaVBpDWFeo8-dRzDqRwXQ2I'
 ```
 
-!/assets/img/posts/Pasted image 20250817005254.png
-The password is: `monkeybizness`
-
-Switch to the root user
-```
-ofbiz@bizness:/opt/ofbiz/runtime/data/derby/ofbiz/seg0$ su
-Password: monkeybizness
-
-cd /root
-cat root.txt
-```
+![](/assets/img/posts/Pasted image 20250817005254.png)

