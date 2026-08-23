@@ -24,7 +24,7 @@ Add the machine Ip to: `/etc/hosts`
 
 Navigating to the site:
 
-![556](Pasted%20image%2020260819192048.png)
+![556](/assets/img/posts/Pasted image 20260819192048.png)
 
 We will found a link: <http://latex.topology.htb/equation.php> , so we will add it to the: `/etc/hosts`
 	`10.10.11.217 topology.htb latex.topology.htb`
@@ -47,11 +47,11 @@ Fuzzing for subdomains eventually we get three hits. The first one `dev` retur
 
 Browsing to `latex` we see this:
 
-![](Pasted%20image%2020260822103845.png)
+![](/assets/img/posts/Pasted image 20260822103845.png)
 
 I decide to take a look at `equation.php`
 
-![](Pasted%20image%2020260822103858.png)
+![](/assets/img/posts/Pasted image 20260822103858.png)
 
 
 
@@ -71,7 +71,7 @@ It is found that there may be a file reading vulnerability. so trying some comma
 \closein\file
 ```
 
-![[Pasted image 20250816232104.png]]
+!/assets/img/posts/Pasted image 20250816232104.png
 
 **Now There are Two Problems:**
 - How to read multiple lines?
@@ -95,9 +95,9 @@ http://latex.topology.htb/equation.php?eqn=
 \verbatiminput{/etc/passwd}
 ```
 
-![](Pasted%20image%2020260822113123.png)
+![](/assets/img/posts/Pasted image 20260822113123.png)
 
-![](Pasted%20image%2020260822112910.png)
+![](/assets/img/posts/Pasted image 20260822112910.png)
 
 Only the command `\lstinputlisting{/usr/share/texmf/web2c/texmf.cnf}` will not trigger WAF
 But when using this command to read `/etc/passwd`, what is returned is a blank page.
@@ -124,7 +124,7 @@ $\lstinputlisting{/var/www/dev/.htpasswd}$
 
 The output will be:
 
-![](Pasted%20image%2020260822111918.png)
+![](/assets/img/posts/Pasted image 20260822111918.png)
 
 Crack it with john:
 ```
@@ -136,7 +136,7 @@ We Now have a username and password `vdaisley:calculus20`
 
 We can log-in to: `dev.topology.htb`
 
-![596](Pasted%20image%2020260819203313.png)
+![596](/assets/img/posts/Pasted image 20260819203313.png)
 
 Lets try to login with SSH:
 ```
@@ -159,7 +159,7 @@ Password: calculus20
 -bash-5.0/tmp$ ./linpeas
 ```
 
-![767](Pasted%20image%2020260819203811.png)
+![767](/assets/img/posts/Pasted image 20260819203811.png)
 
 There is an unusual directory that I can write to: `/opt/gnuplot`. Weird, only write permissions, no read permissions.
 
@@ -172,13 +172,13 @@ emily@pilgrimage:~$ ./pspy64
 ```
 We notice some interesting activity, and some timing tasks were found too
 
-![[Pasted image 20250816232348.png]]
+!/assets/img/posts/Pasted image 20250816232348.png
 
 In the scheduled task, search for the file with the suffix `.plt` in the` /opt/gnuplot` directory with root authority and execute it directly, then you can write any `.plt` file to execute our command.
 
 In the `/var/www/` directory, we discovered a new possible subdomain: `stats`
 
-![](Pasted%20image%2020260819204407.png)
+![](/assets/img/posts/Pasted image 20260819204407.png)
 
 So add it to: `/etc/hosts`
 	`10.10.11.217 topology.htb latex.topology.htb dev.topology.htb stats.topology.htb`
@@ -197,7 +197,7 @@ vdaisley@topology:/opt/gnuplot$ /usr/bin/bash -p
 bash-5.0# whoami          //root
 ```
 
-![](Pasted%20image%2020260819204806.png)
+![](/assets/img/posts/Pasted image 20260819204806.png)
 
 Find the root user
 ```

