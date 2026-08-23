@@ -1,6 +1,6 @@
-## The Intention
+**The Intention**
 
-> Document what I learn from others, so others can learn from me.
+Document what I learn from others, so others can learn from me.
 
 ليس من شروط الإنجاز وجود إسمك في التاريخ!
 
@@ -11,6 +11,5 @@
 
 خُلِد عملهم ولم يُذكر اسمهم.
 
-**ليس المهم من أنت؟ ولكن المهم ماذا قدمت!**
-
+ليس المهم من أنت؟ ولكن المهم ماذا قدمت!
 لا تتهافت لتُذكر... يكفيك أن الله يعلم ما تصنع.
