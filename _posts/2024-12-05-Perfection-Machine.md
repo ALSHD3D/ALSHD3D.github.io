@@ -1,4 +1,3 @@
-
 ---
 title: Hack The Box - Perfection
 date: 2024-12-05 13:33:37 +0200
