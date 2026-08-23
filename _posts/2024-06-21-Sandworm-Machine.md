@@ -16,7 +16,7 @@ Scan the machine with Nmap tool
 nmap -p- -sC -sV --min-rate 5000 -oN nmappc -Pn 10.10.11.218
 ```
 
-![](/assets/img/posts/Pasted image 20260822205825.png)
+![](/assets/img/posts/Pasted image 20260820075359.png)
 
 Found a hostname `ssa.htb` , so add it to the: `/etc/hosts` file
 	`10.10.11.218 ssa.htb`
