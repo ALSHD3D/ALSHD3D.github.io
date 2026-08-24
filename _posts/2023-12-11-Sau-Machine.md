@@ -39,6 +39,7 @@ I'd advise you to play around with the request-baskets to understand what exactl
 
 ### Exploitation & Gaining Access
 First, let's create a request basket and adjust its settings as following
+
 ![](/assets/img/posts/Pasted image 20250816233929.png)
 
 1- insecure_tls                    set to true will bypass certificate verification
@@ -51,6 +52,7 @@ This app lets users create “baskets” to capture HTTP requests. When I create
 
 
 Second, Let's find out what lurks inside our Port 80 by visiting our bucket URL
+
 ![](/assets/img/posts/Pasted%20image%2020260819232351.png)
 
 After identifying the request-baskets version, I searched for known vulnerabilities and found this CVE, This version allowed unauthenticated users to force the server to make HTTP requests to internal services.
@@ -60,6 +62,7 @@ Using the exploit from [https://github.com/entr0pie/CVE-2023-27163](https://git
 ![](/assets/img/posts/Pasted%20image%2020260819232455.png)
 
 Visiting the newly created bucket revealed this page, which has a suspiciously obvious version clue for Mailtrail.
+
 ![](/assets/img/posts/Pasted%20image%2020260819232513.png)
 
 Now, we know the service running on Port 80 is Mailtrail of version 0.53
@@ -67,7 +70,7 @@ Now, we know the service running on Port 80 is Mailtrail of version 0.53
 It is time for you to do some research and see if you can find a vulnerability and if possible prepare a proof-of-concept of this simple vulnerability
 
 Our next vulnerability is that of RCE (Remote Code Execution) which is present in the version 0.53 of Mailtrail service. When search for it in google: Maltrail (v0.53) github
-<https://huntr.dev/bounties/be3c5204-fbd9-448d-b97c-96a8d2941e87/>
+https://huntr.dev/bounties/be3c5204-fbd9-448d-b97c-96a8d2941e87/
 
 First, we will use netcat and spin-up a listener on our local attack machine.
 ```

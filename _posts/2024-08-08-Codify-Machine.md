@@ -45,6 +45,8 @@ I modified the PoC command and tested whether the exploit was working in the exp
 
 ![](/assets/img/posts/1-cve.png)
 
+And put it, like that
+
 ![](/assets/img/posts/Pasted%20image%2020260820105615.png)
 
 Now, it's time to get a reverse shell.
@@ -58,6 +60,7 @@ Second, making our reverse shell
 
 ![](/assets/img/posts/2-cve.png)
 
+We got a shell on our listener
 
 ![](/assets/img/posts/Pasted%20image%2020260820105222.png)
 
@@ -146,9 +149,10 @@ while not found:
         found = True
 ```
 
+Amazing, we got the root password.
+
 ![](/assets/img/posts/Pasted%20image%2020260820111856.png)
 
-Amazing, we got the root password.
 
 Let’s escalate our privilege.
 ```
