@@ -1,10 +1,8 @@
 ---
 title: Hack The Box - PC
 date: 2023-10-03 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
+categories: [HackTheBox,CVE]
+tags: [htb,cve-2023-0297]     # TAG names should always be lowercase
 comments: true
 ---
 

@@ -1,10 +1,8 @@
 ---
 title: Hack The Box - Codify
 date: 2024-08-08 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
+categories: [HackTheBox,CVE]
+tags: [htb,cve-2023-30547]     # TAG names should always be lowercase
 comments: true
 ---
 

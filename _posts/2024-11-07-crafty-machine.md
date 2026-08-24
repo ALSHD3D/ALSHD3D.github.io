@@ -1,10 +1,8 @@
 ---
 title: Hack The Box - Crafty
 date: 2024-11-07 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
+categories: [HackTheBox,CVE]
+tags: [htb,cve-2021-44228]     # TAG names should always be lowercase
 comments: true
 ---
 

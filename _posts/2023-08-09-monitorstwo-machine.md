@@ -1,10 +1,8 @@
 ---
 title: Hack The Box - MonitorsTwo
 date: 2023-08-09 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
+categories: [HackTheBox,CVE]
+tags: [htb,cve-2022-46169,cve-2021-41091]     # TAG names should always be lowercase
 comments: true
 ---
 

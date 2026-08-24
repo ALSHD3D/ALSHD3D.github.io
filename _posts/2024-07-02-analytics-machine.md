@@ -1,10 +1,8 @@
 ---
 title: Hack The Box - Analytics
 date: 2024-07-02 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
+categories: [HackTheBox,CVE]
+tags: [htb,cve-2023-38646,cve-2023-32629,cve-2023-2640]     # TAG names should always be lowercase
 comments: true
 ---
 

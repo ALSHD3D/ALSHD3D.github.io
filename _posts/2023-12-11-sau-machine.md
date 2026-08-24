@@ -1,10 +1,8 @@
 ---
 title: Hack The Box - Sau
 date: 2023-12-11 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
+categories: [HackTheBox,CVE]
+tags: [htb,cve-2023-27163]     # TAG names should always be lowercase
 comments: true
 ---
 

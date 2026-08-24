@@ -1,10 +1,8 @@
 ---
 title: Hack The Box - CozyHosting
 date: 2024-05-06 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
+categories: [HackTheBox]
+tags: [htb]     # TAG names should always be lowercase
 comments: true
 ---
 

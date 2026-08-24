@@ -1,10 +1,8 @@
 ---
 title: Hack The Box - Devvortex
 date: 2024-09-06 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
+categories: [HackTheBox,CVE]
+tags: [htb,cve-2023-2375,cve-2023-23752,cve-2023-26604]     # TAG names should always be lowercase
 comments: true
 ---
 

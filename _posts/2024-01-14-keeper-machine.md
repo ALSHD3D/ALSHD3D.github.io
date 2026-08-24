@@ -1,10 +1,8 @@
 ---
 title: Hack The Box - Keeper
 date: 2024-01-14 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
+categories: [HackTheBox,CVE]
+tags: [htb,cve-2023-32784]     # TAG names should always be lowercase
 comments: true
 ---
 

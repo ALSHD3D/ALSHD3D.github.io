@@ -1,10 +1,8 @@
 ---
 title: Hack The Box - Pilgrimage
 date: 2023-11-22 13:33:37 +0200
-categories:
-  - HackTheBox
-tags:
-  - HTB
+categories: [HackTheBox,CVE]
+tags: [htb,cve-2022-44268,cve-2022-4510]     # TAG names should always be lowercase
 comments: true
 ---
 
