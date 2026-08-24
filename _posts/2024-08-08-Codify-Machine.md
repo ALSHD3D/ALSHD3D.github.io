@@ -67,6 +67,7 @@ We got a shell on our listener
 Great! now we got a shell as svc user. We have a user home directory “Joshua” but we can’t move into that directory. So, it’s time to enumerate.
 
 ### Privilege Escalation
+#### Enumerating the Target
 Enumerating the file system. I noticed an interesting file named `tickets.db`.
 ```
 cd /var/www/contact
@@ -106,7 +107,7 @@ ssh joshua@10.10.11.239
 spongebob1
 ```
 
-#### Privilege Escalation
+#### Using Misconfiguration
 After becoming the joshua user, I continued searching for further privilege escalation opportunities.
 
 Checking sudo permissions revealed joshua could run this script as root:
