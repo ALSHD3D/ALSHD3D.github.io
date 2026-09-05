@@ -2,7 +2,7 @@
 title: A Real-World Implementation of Trend Micro Deep Security - A Practice Guide
 date: 2025-03-14 13:33:37 +0200
 categories: [Network Security]
-tags: [network-security,implementation,deep-security,trend-micro]     # TAG names should always be lowercase
+tags: [network-security,implementation,trend-micro]     # TAG names should always be lowercase
 comments: true
 ---
 
