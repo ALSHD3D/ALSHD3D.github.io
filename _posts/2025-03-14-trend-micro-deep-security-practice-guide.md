@@ -269,7 +269,6 @@ Click each of the other tabs to view the different configuration options.
 6. Click the **Events & Reports** menu. Expand Events and click **System Events** in the left-hand pane and note the entries for the update of the Deep Security Agent on SERVER-03. Doubleclick the entry to view the Details. 
 ![](/assets/img/posts/deep-security/36.png)
 
-
 ### Integrating Deep Security with Connected Threat 
  We will integrate Deep Security with Deep Discovery Analyzer and Apex Central as part of Connected Threat Defense. A file sample will be submitted manually and the progress of the file through the phases of Connected Threat Defense will be observed.
  

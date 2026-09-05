@@ -1,6 +1,6 @@
 ---
 title: Exposed Credentials Behind a Password Field - A Real-World Pentest Finding
-date: 2025-11-03 13:33:37 +0200
+date: 2025-9-03 13:33:37 +0200
 categories: [Penetration Test]
 tags: [pentest]     # TAG names should always be lowercase
 comments: true

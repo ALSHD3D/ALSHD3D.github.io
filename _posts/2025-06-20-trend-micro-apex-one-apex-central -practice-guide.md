@@ -1,6 +1,6 @@
 ---
 title: A Real-World Implementation of Trend Micro Apex One & Apex Central - A Practice Guide
-date: 2025-07-20 13:33:37 +0200
+date: 2025-06-20 13:33:37 +0200
 categories: [Network Security]
 tags: [network-security,implementation,apex-one,apex-central,trend-micro]     # TAG names should always be lowercase
 comments: true
