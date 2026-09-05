@@ -213,7 +213,7 @@ And after the Trend Micro products are registered and integrated with Apex Centr
 4. Expand the New Entity folder. Drag the Apex One Server device (listed as Apex One) from the New Entity folder to the newly created Trend Micro Servers folder & when prompted, click OK to acknowledge the move.
 ![](/assets/img/posts/apexone-apexcentral/33.png)
 5. The Apex One Server should now be displayed in the Trend Micro Servers folder.
-![](34.png)
+![](/assets/img/posts/apexone-apexcentral/34.png)
 
 ##### Configure Policy Template 
 A policy template will be configured to identify the target endpoints receiving the policy details as well as the settings to be deployed to the Security Agents on those endpoints. 

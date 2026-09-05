@@ -73,7 +73,7 @@ A Deep Security Agent will be manually installed on the Windows Server 2016 serv
 1. In the virtual application, click the VM-SERVER-01 virtual machine. If prompted, log in to Windows Server 2016 using the credentials as listed in the network settings page. 
 2. Previously, the Deep Security Agent installer was exported to a folder in the desktop. A shortcut to this folder has been placed on the desktop of the VM-SERVER-01 image. Double click the shortcut and locate the installer called Agent-Core-Windows 12.0.____.x64.msi. Double-click to start the installation. 
 3. Ignore any security warning and click Run to launch the Deep Security Agent Setup Wizard. 
-![](7/assets/img/posts/deep-security/.png)
+![](/assets/img/posts/deep-security/7.png)
 
 4. The Welcome window is displayed. Click Next.
 ![](/assets/img/posts/deep-security/8.png)
@@ -239,8 +239,10 @@ The new policy must be applied to computers to take effect. The new **Classroom*
 Since this module was not previously enabled, Deep Security Manager executes the installation of the Anti-Malware Protection Module and other required components on this Deep Security Agent. 
 4. The Task column for the computer displays Sending Policy. A progress prompt is also displayed as the change is applied. 
 ![](/assets/img/posts/deep-security/33.png)
-5. Security updates will also be applied for the Anti-Malware components. Another progress prompt may be displayed after a moment and the Task column for the computer will change to Security Update in Progress. The updates may take a moment to download. 
+5. Security updates will also be applied for the Anti-Malware components. Another progress prompt may be displayed after a moment and the Task column for the computer will change to Security Update in Progress. The updates may take a moment to download.
+
 ![](/assets/img/posts/deep-security/34.png)
+
 6. Wait until the Task column clears before continuing. 
 
 7. Hover your mouse over the SERVER-03 computer and click Preview. The Anti-Malware Protection Module now displays as On, with **Real Time** scanning enabled.
